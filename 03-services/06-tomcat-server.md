@@ -152,8 +152,15 @@ Pages e não é um container Enterprise JavaBeans. Desenvolvido pela Apache Soft
 
 	#editando o arquivo de criação de usuários do Tomcat
 	sudo vim /opt/tomcat/conf/tomcat-users.xml
+	INSERT
 
-	#verificando o serviço do Apache Tomcat Server
+		#alterar a partir da linha: 31
+		<user username="admin" password="pti@2018" roles="manager-gui,manager,admin-gui,admin,tomcat,role1"/>
+
+	#sair e salvar
+	ESC SHIFT : x <Enter>
+
+	#reiniciando e verificando o serviço do Apache Tomcat Server
 	sudo systemctl restart tomcat10
 	sudo systemctl status tomcat10
 
@@ -173,7 +180,7 @@ PRIMEIRO USUÁRIO: tomcat10 (TUDO EM MINÚSCULO) SENHA: tomcat10, SEGUNDO USUÁR
 MINÚSCULO) SENHA: sua_senha, TESTAR O ACESSO AO TOMCAT COM OS USUÁRIOS E VERIFICAR SE ESTÃO TENDO
 DIREITOS PARA ADMINISTRAR O SERVIDOR.
 
-#17: DESAFIO: ADICIONAR O USUÁRIO: admin E O SEU: seu_usuário NO GRUPO DO TOMCAT PARA ADMINISRTAR
+#17: DESAFIO: ADICIONAR O USUÁRIO: admin E O SEU: seu_usuário NO GRUPO DO TOMCAT PARA ADMINISTRAR
 O TOMCAT SERVER SEM PRECISAR DO COMANDO SUDO.
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO TOMCAT SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
