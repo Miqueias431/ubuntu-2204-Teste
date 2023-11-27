@@ -7,11 +7,33 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 16/01/2023<br>
-#Data de atualização: 23/04/2023<br>
-#Versão: 0.06<br>
+#Data de atualização: 24/11/2023<br>
+#Versão: 0.09<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO APACHE2 SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do Apache2 realizado com sucesso!!! #BoraParaPrática
+
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selo/desafio.png
+
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica
+
+Conteúdo estudado nesse desafio:<br>
+#01_ Instalado o Apache2 e PHP8 no Ubuntu Server;<br>
+#02_ Verificando os Status do Serviço do Apache2;<br>
+#03_ Verificando as Versões do Apache2 e PHP8;<br>
+#04_ Verificando a Porta de Conexão do Apache2;<br>
+#05_ Diretórios e Arquivos de Configuração do Apache2 e PHP8;<br>
+#06_ Adicionando o Usuário Local no Grupo do Apache2;<br>
+#07_ Criando um Projeto de Teste de Site no Apache2;<br>
+#08_ Alterando as Permissões de Arquivos e Diretórios;<br>
+#09_ Criando Páginas em HTML e PHP para testar o Apache2;<br>
+#10_ Utilizando o VSCode para editar páginas HTML e PHP;<br>
+#11_ Testando o acesso as Páginas no Navegador do Apache2;<br>
+#12_ Desafio do Novo Projeto e Usuários do Web Server Apache2.
 
 Site Oficial do Apache2: https://httpd.apache.org/<br>
 Site Oficial do PHP (7.x ou 8.x): https://www.php.net/
@@ -34,6 +56,7 @@ web NCSA HTTPd criado por Rob McCool.
 	sudo apt install git vim perl python2 python3 unzip ghostscript zlib1g zlib1g-dev apt-transport-https
 
 	#instalando o Apache2 Server e PHP 8.x
+	#opção da contra barra (\): criar uma quebra de linha no terminal
 	sudo apt install apache2 apache2-utils apache2-bin apache2-data php8.1 php8.1-cli php8.1-common \
 	php8.1-mysql php8.1-opcache php8.1-readline php8.1-common php8.1-bcmath php8.1-curl php8.1-intl \
 	php8.1-mbstring php8.1-xml php8.1-zip php8.1-soap php-imagick php-json libapache2-mod-php libapr1 \
@@ -71,18 +94,22 @@ web NCSA HTTPd criado por Rob McCool.
 
 #05_ Adicionado o Usuário Local no Grupo Padrão do Apache2 Server<br>
 
+	#adicionando o seu usuário no grupo do Apache2
 	#opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
 	sudo usermod -a -G www-data $USER
+	
+	#fazendo login em um novo grupo do Apache2
 	newgrp www-data
+	
+	#verificando os identificadores de usuário e grupos
 	id
 	
-	#recomendo fazer logout do usuário para testar as permissões de grupos 
+	#recomendo fazer logout do usuário para testar as permissões de grupos
+	#OBSERVAÇÃO: você pode utilizar o comando: exit ou tecla de atalho: Ctrl +D
 	logout
-	exit
-	Ctrl + D
 
 	#OBSERVAÇÃO IMPORTANTE: caso a conexão SSH trave, utile os caracteres de escape para 
-	finalizar conexões SSH.
+	#finalizar conexões SSH.
 	#caracteres: ~ (til) e . (ponto)
 	~.
 
@@ -91,12 +118,15 @@ web NCSA HTTPd criado por Rob McCool.
 	#acessando o diretório padrão dos Sites do Apache2 Server
 	cd /var/www/html
 	
+		#criando o diretório de teste das páginas HTML e PHP
 		#opção do comando mkdir: -v (verbose)
 		sudo mkdir -v teste
 		
+		#alterando as permissões do diretório de teste
 		#opção do comando chmod: -v (verbose), 775 (User=RWX,Group=RWX,Other=R-X)
 		sudo chmod -v 775 teste/
 		
+		#alterando o dono e grupo do diretório de teste
 		#opção do comando chown: -v (verbose), root (User), . (separate), www-date (group)
 		sudo chown -v root.www-data teste/
 		
@@ -106,7 +136,11 @@ web NCSA HTTPd criado por Rob McCool.
 #07_ Criando páginas HTML e PHP para testar o Apache2 Server<br>
 
 	#OBSERVAÇÃO IMPORTANTE: nesse exemplo vamos editar os arquivos teste.html, teste.php e phpinfo.php 
-	utilizando o Editor de Texto em Linha de Comando Vim.
+	#utilizando o Editor de Texto em Linha de Comando Vim.
+
+	#OBSERVAÇÃO IMPORTANTE: no Microsoft Windows utilizando o Powershell no processo de copiar e colar
+	#o código HTML ou PHP ele desconfigura o código, recomendo no Windows utilizar o software PuTTY 
+	#para editar os códigos ou copiar e colar.
 
 	#criando o arquivo em HTML
 	sudo vim seu_nome.html
@@ -122,6 +156,7 @@ web NCSA HTTPd criado por Rob McCool.
 		<body>
 			<h1>Teste da Linguagem HTML (HyperText Markup Language)</h1>
 			Autor: Robson Vaamonde<br>
+			Editado por: SEU NOME AQUI<br>
 			Linkedin: <a href="https://www.linkedin.com/in/robson-vaamonde-0b029028/">Robson Vaamonde</a><br>
 			Site: <a href="procedimentosemti.com.br">procedimentosemti.com.br</a><br>
 			Facebook: <a href="facebook.com/ProcedimentosEmTI"> Procedimentos Em TI</a><br>
@@ -131,7 +166,7 @@ web NCSA HTTPd criado por Rob McCool.
 		</body>
 	</html>
 ```
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 	#criando o arquivo em PHP
@@ -149,6 +184,7 @@ web NCSA HTTPd criado por Rob McCool.
 			<?php 
 				echo '<h1>Teste da Linguagem HTML (HyperText Markup Language)</h1>';
 				echo 'Autor: Robson Vaamonde<br>';
+				echo 'Editado por: SEU NOME AQUI<br>';
 				echo 'Linkedin: linkedin.com/in/robson-vaamonde-0b029028/<br>';
 				echo 'Site: procedimentosemti.com.br<br>';
 				echo 'Facebook: facebook.com/ProcedimentosEmTI<br>';
@@ -159,7 +195,7 @@ web NCSA HTTPd criado por Rob McCool.
 		</body>
 	</html>
 ```
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 	#criando o arquivo de informações do PHP
@@ -172,25 +208,29 @@ web NCSA HTTPd criado por Rob McCool.
 	phpinfo(); 
 ?>
 ```
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 #08_ Testando o Apache2 Server e o PHP no navegador<br>
 
-	#utilizar os navegadores para testar as páginas
+	#utilizar os navegadores para testar suas páginas
 	firefox ou google chrome: http://endereço_ipv4_ubuntuserver
 	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/teste/
 
-#09_ DESAFIO-01: CRIAR UM NOVO DIRETÓRIO NA RAIZ DO APACHE2 EM: /var/www/html COM seu_nome (TUDO EM
-MINÚSCULO) PARA UM NOVO SITE, CRIAR UM NOVA PÁGINA EM HTML CHAMADA: index.html (TUDO EM MINÚSCULA) 
-NO SEU DIRETÓRIO, ADICIONAR MAIS OPÇÕES DO HTML (VEJA O SITE W3SCHOOLS) E COLOCAR 02 (DUAS) IMAGENS 
+#09_ DESAFIO-01: CRIAR UM NOVO DIRETÓRIO NA RAIZ DO APACHE2 EM: /var/www/html COM: seu_nome (TUDO EM
+MINÚSCULO) PARA UM NOVO SITE, DENTRO DO SEU DIRETÓRIO CRIAR UM NOVA PÁGINA EM HTML CHAMADA: index.html
+(TUDO EM MINÚSCULA), ADICIONAR MAIS OPÇÕES DO HTML (VEJA O SITE W3SCHOOLS) E COLOCAR 02 (DUAS) IMAGENS 
 NA PÁGINA.
 
 #10_ DESAFIO-02: NO SEU NOVO DIRETÓRIO CRIAR UM ARQUIVO EM PHP CHAMADO: seunome.php, ADICIONAR MAIS
 OPÇÕES DO PHP (VEJA O SITE W3SCHOOLS) TESTAR NO SEU NAVEGADOR.
 
-#11_ DESAFIO-03: ADICIONAR O USUÁRIO: admin E O SEU USUÁRIO CRIADO NO SISTEMA NO GRUPO DO APACHE2,
-TESTAR AS PERMISSÕES E ACESSOS NOS DIRETÓRIOS DO APACHE 2 E DOS SITES.
+#11_ DESAFIO-03: ADICIONAR O USUÁRIO: admin E O USUÁRIO: seu_usuário CRIADO NO SISTEMA NO GRUPO DO 
+APACHE2, TESTAR AS PERMISSÕES DE ACESSO NOS DIRETÓRIOS DO APACHE 2 E DOS SITES CRIADOS.
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO APACHE2 SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do Apache2 realizado com sucesso!!! #BoraParaPrática
+
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS: #boraparapratica #boraparaprática #vaamonde
+#robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde

@@ -7,11 +7,33 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 18/04/2023<br>
-#Data de atualização: 19/10/2023<br>
-#Versão: 0.05<br>
+#Data de atualização: 24/11/2023<br>
+#Versão: 0.08<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
+
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selo/desafio.png
+
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica
+
+Conteúdo estudado nesse desafio:<br>
+#01_ Instalado o OpenSSH no Ubuntu Server;<br>
+#02_ Verificando os Status do Serviço do OpenSSH;<br>
+#03_ Verificando a Versão do OpenSSH Server e Client;<br>
+#04_ Verificando a Porta de Conexão do OpenSSH Server;<br>
+#05_ Diretórios e Arquivos de Configuração do OpenSSH;<br>
+#06_ Segurança do Arquivo Hosts.Deny do TCPWrappers;<br>
+#07_ Segurança do Arquivo Hosts.Allow do TCPWrappers;<br>
+#08_ Configuração do Arquivo sshd_config do OpenSSH;<br>
+#09_ Configuração do Arquivo issue.net (Banner Login);<br>
+#10_ Acessando Remoto via Powershell, PuTTY e Terminal;<br>
+#11_ Criando usuário Local e Adicionando ao Grupo SUDO;<br>
+#12_ Desafios de Usuários e Acesso Remoto do OpenSSH.
 
 Site Oficial do OpenSSH: https://www.openssh.com/<br>
 Site Oficial do OpenSSL: https://www.openssl.org/<br>
@@ -71,7 +93,7 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 		#inserir as informações na linha 17
 		ALL: ALL
 
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 	#editando o arquivo de configuração de Liberação de Serviço e Host
@@ -82,14 +104,13 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 		#OBSERVAÇÃO: ALTERAR A REDE CONFORME A SUA NECESSIDADE
 		sshd: 172.16.1.0/24
 
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 #06_ Atualizando e editando os arquivos de configuração do OpenSSH Server e do Banner<br>
 
-	#opção do comando wget: -v (verbose), -O (output file)
-	
 	#atualizando o arquivo de configuração do OpenSSH Server
+	#opção do comando wget: -v (verbose), -O (output file)
 	sudo wget -v -O /etc/ssh/sshd_config https://raw.githubusercontent.com/vaamonde/ubuntu-2204/main/conf/sshd_config
 
 	#atualizando arquivo de configuração do Banner do Ubuntu Server
@@ -111,7 +132,7 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 		#OBSERVAÇÃO: ALTERAR O GRUPO DE ACESSO CONFORME A SUA NECESSIDADE
 		AllowGroups vaamonde
 
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 	#editando o arquivo de configuração do Banner do Ubuntu Server
@@ -122,7 +143,7 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 		#OBSERVAÇÃO: ALTERAR O BANNER CONFORME A SUA NECESSIDADE
 		Servidor: wsvaamonde - Admin: Robson Vaamonde
 
-	#sair e salvar o arquivo
+	#salvar e sair do arquivo
 	ESC SHIFT :x <Enter>
 
 	#reiniciar o serviço do OpenSSH Server
@@ -160,11 +181,12 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 
 #08_ Criando um usuário Administrador no Ubuntu Server<br>
 
-	#criando o usuário Admin
 	#OBSERVAÇÃO IMPORTANTE: NESSE EXEMPLO ESTÁ SENDO CRIADO UM USUÁRIO ADMIN PARA A
 	#ADMINISTRAÇÃO DO SERVIDOR, NÃO RECOMENDO CRIAR UM USUÁRIO CHAMADO: admin POIS
 	#É UM USUÁRIO CONHECIDO E EXISTE VÁRIOS SOFTWARE DE FORÇA BRUTA QUE USA ESSE
 	#USUÁRIO PARA INVADIR SERVIDORES.
+
+	#criando o usuário Admin
 	sudo adduser admin
 		New password: pti@2018
 		Retype new password: pti@2018
@@ -187,7 +209,7 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 	#listando o grupo criado com o comando getent
 	sudo getent group admin
 
-#09_ Adicionando o usuário Admin no grupo SUDO (Super User Do)
+#09_ Adicionando o usuário Admin no grupo SUDO (Super User Do)<br>
 
 	#adicionando o usuário Admin ao grupo do SUDO
 	#opção do comando usermod: -a (append), -G (groups)
@@ -199,17 +221,21 @@ em sessões de comunicações em uma rede de computadores usando o protocolo SSH
 	#verificando as identificações de grupos do usuário Admin
 	sudo id admin
 
-#10_ Se logando no Terminal (Bash/Shell) do Ubuntu Server
+#10_ Se logando no Terminal (Bash/Shell) do Ubuntu Server<br>
 
 	OBSERVAÇÃO IMPORTANTE: fazer o teste de Login no Terminal do Ubuntu Server para
 	verificar se está tudo OK na criação do usuário admin.
 
-#11_ DESAFIO-01: PERMITIR QUE O USUÁRIO ADMIN SE CONECTE REMOTAMENTE NO SERVIDOR UBUNTU
+#11_ DESAFIO-01: PERMITIR QUE O USUÁRIO: admin SE CONECTE REMOTAMENTE NO SERVIDOR UBUNTU
 SERVER VIA SSH UTILIZANDO O POWERSHELL, PUTTY OU TERMINAL NO LINUX.
 
-#12_ DESAFIO-02: CRIAR UM USUÁRIO COM O SEU NOME, EXEMPLO: robson (TUDO EM MINÚSCULO)
+#12_ DESAFIO-02: CRIAR UM USUÁRIO COM O SEU NOME, EXEMPLO: robson (TUDO EM MINÚSCULO),
 FAZER O MESMO PROCEDIMENTO PARA ADICIONAR O SEU USUÁRIO AO GRUPO: sudo E PERMITIR QUE O
 SEU USUÁRIO ACESSE O SERVIDOR UBUNTU SERVER VIA SSH.
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
+
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS: #boraparapratica #boraparaprática #vaamonde
+#robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde
