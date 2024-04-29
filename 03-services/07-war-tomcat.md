@@ -7,19 +7,19 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 16/01/2023<br>
-#Data de atualização: 24/11/2023<br>
-#Versão: 0.08<br>
+#Data de atualização: 06/04/2024<br>
+#Versão: 0.14<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WAR-TOMCAT SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do War-Tomcat realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
 MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
 
-LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selo/desafio.png
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/07-tomcat-war.png
 
 #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiotomcat #desafiowartomcat
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Acessando o Projeto do Github do Prof. José de Assis;<br>
@@ -47,17 +47,32 @@ Em engenharia de software, um arquivo WAR é um arquivo JAR usado para distribui
 de JavaServer Pages, Servlets Java, classes Java, arquivos XML, bibliotecas de tag, páginas<br>
 web estáticas e outros recursos que, juntos, constituem uma aplicação web.
 
+[![WAR TomCAT](http://img.youtube.com/vi/DTduw0NKQvo/0.jpg)](https://www.youtube.com/watch?v=DTduw0NKQvo "WAR TomCAT")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=DTduw0NKQvo
+
 #01_ Fazendo o download do WAR do Apache Tomcat Server desenvolvido em JavaEE<br>
 
+	#OBSERVAÇÃO IMPORTANTE: o projeto da Agenda desenvolvida em JavaEE do Prof.
+	#José de Assis no seu Github está desatualizado, o projeto que está no Github
+	#foi feito na versão anterior do Java e do Apache TomCAT, para resolver esse
+	#problema ele compilou um no WAR que está no meu Github para essa aula.
+
+	#OBSERVAÇÃO: esse novo WAR do Projeto da Agenda foi customizado e melhorado
+	#pela Prof(a). Sirlene Sanches, criando uma nova estrutura em CSS para deixar
+	#o ambiente mais bonito.
+	
 	Acesse o Repositório: https://github.com/professorjosedeassis/javaEE
 	Clique em: Releases
 		Em assets, clique em: agenda.war para fazer o Download.
 
-#02_ Acessando o Apache Tomcat pelo Navegador<br>
+	LINK DE DOWNLOAD DO ARQUIVO WAR: https://github.com/vaamonde/ubuntu-2204/tree/main/war
+
+#02_ Acessando o Apache TomCAT Server pelo Navegador<br>
 
 	firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080
 
-#03_ Fazendo o Deploy da Aplicação no Apache Tomcat<br>
+#03_ Fazendo o Deploy da Aplicação Agenda de Contatos no Apache TomCAT Server<br>
 
 	Clique em: Manager App
 		Usuário padrão: admin
@@ -70,6 +85,10 @@ web estáticas e outros recursos que, juntos, constituem uma aplicação web.
 
 	Após o Deploy da aplicação a nova URL (Uniform Resource Locator) de acesso será: 
 		firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080/agenda
+
+	#OBSERVAÇÃO IMPORTANTE: acessando a aplicação Agenda pela primeira vez será apresentado
+	#uma mensagem de erro, esse erro está associado ao Banco de Dados que ainda não foi
+	#criado no MySQL, após a sua criação o sistema irá funcionar perfeitamente.
 
 #04_ Criando a Base de Dados no MySQL Server do projeto da Agenda em JavaEE<br>
 
@@ -85,6 +104,9 @@ CREATE USER 'dbagenda'@'localhost' IDENTIFIED WITH mysql_native_password BY 'dba
 GRANT USAGE ON *.* TO 'dbagenda'@'localhost';
 GRANT ALL PRIVILEGES ON dbagenda.* TO 'dbagenda'@'localhost';
 FLUSH PRIVILEGES;
+
+/* Verificando o Usuário Agenda criado no Banco de Dados MySQL Server*/
+SELECT user,host FROM mysql.user WHERE user='dbagenda';
 
 /* Acessando o Banco de Dados DBAgenda */
 USE dbagenda;
@@ -112,30 +134,95 @@ exit
 	sudo mysql -u dbagenda -p
 
 ```sql
-	SHOW DATABASES;
-	USE dbagenda;
-	SHOW TABLES;
-	DESC contatos;
-	exit
+#comandos básicos de verificação da base de dados e tabelas do MySQL
+SHOW DATABASES;
+USE dbagenda;
+SHOW TABLES;
+DESC contatos;
+exit
 ```
 
-#06_ Fazendo o Backup e Restore do Banco de Dados MySQL Server<br>
+#06_ Acessando novamente a Aplicação Agenda via Navegador e adicionando Registros<br>
 
-	#opções do comando mysqldump: -u (user), -p (password)
+	firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080/agenda
+
+#07_ Fazendo o Backup e Restore do Banco de Dados DBAgenda no MySQL Server<br>
+
+	#OBSERVAÇÃO IMPORTANTE: para esse teste, recomendo adicionar vários registros no Banco
+	#de Dados do DBAgenda, para verificar os procedimentos de Dump do Banco e Restore das
+	#informações.
+
+	#fazendo o backup do banco de dados DBAgenda
+	#opções do comando mysqldump: -u (user), -p (password), database
+	#opção do redirecionador de saída >: Redireciona a saída padrão (STDOUT)
 	sudo mysqldump -u root -p dbagenda > bkp-dbagenda.sql
 
 	#verificando o conteúdo do arquivo backupeado 
 	sudo less bkp-dbagenda.sql
 
-#07_ DESAFIO: FAZER O DOWNLOAD E O DEPLOY DA APLICAÇÃO JAVA: Sample Web Application DO PROJETO 
-DO GITHUB: https://github.com/AKSarav/SampleWebApp/ - APÓS O DEPLOY SERÁ CRIADO O LINK DO APP:
-http://endereço_ipv4_ubuntuserver:8080/SampleWebApp
+	#opções do comando mysql: -u (user), -p (password)
+	sudo mysql -u dbagenda -p
 
-LINK DO ARQUIVO WAR: https://github.com/AKSarav/SampleWebApp/raw/master/dist/SampleWebApp.war
+```sql
+#comandos básicos de verificação da base de dados e tabelas do MySQL
+SHOW DATABASES;
+USE dbagenda;
+SHOW TABLES;
+
+#verificando todos os registros da Tabela Contatos
+SELECT * FROM contatos;
+
+#removendo todos os registros da Tabela Contatos
+TRUNCATE TABLE contatos;
+SELECT * FROM contatos;
+exit
+```
+
+	#restaurando o backup do banco de dados DBAgenda
+	#opções do comando mysql: -u (user), -p (password)
+	#opção do redirecionador de entrada <: Redireciona a entrada padrão (STDIN)
+	sudo mysql -u root -p dbagenda < bkp-dbagenda.sql
+
+	#opções do comando mysql: -u (user), -p (password)
+	sudo mysql -u dbagenda -p
+
+```sql
+#comandos básicos de verificação da base de dados e tabelas do MySQL
+SHOW DATABASES;
+USE dbagenda;
+SHOW TABLES;
+
+#verificando todos os registros da Tabela Contatos
+SELECT * FROM contatos;
+exit
+```
+	#acessar novamente a aplicação para verificar se voltou os registros
+	firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080/agenda
+
+#08_ DESAFIO-01: FAZER O DOWNLOAD E O DEPLOY DA APLICAÇÃO JAVA: Hello World DO PROJETO DO 
+GITHUB: https://github.com/vaamonde/ubuntu-2204/tree/main/war - APÓS O DEPLOY SERÁ CRIADO 
+O LINK DO APP: http://endereço_ipv4_ubuntuserver:8080/helloworld/
+
+#09_ DESAFIO-02: DELETAR A BASE DE DADOS: dbagenda E O USUÁRIO: dbagenda DO MYSQL SERVER
+(VEJA O SITE W3SCHOOLS), RECRIAR NOVAMENTE A BASE DE DADOS E USUÁRIO, IMPORTAR O BACKUP
+E TESTAR A CONEXÃO NO NAVEGADOR.
+
+#10_ DESAFIO-03: FAZER O UNDEPLOY DA APLICAÇÃO: dbagenda E FAZER O DEPLOY NOVAMENTE,
+VERIFICAR SE O NOME MANTEVE O MESMO E O ACESSO AO BANCO DE DADOS FOI FEITO COM SUCESSO.
+
+#11_ DESAFIO-04: ADICIONAR OS LINKS DOS DESAFIOS DO WAR TOMCAT DA AGENDA E DO SAMPLE NO 
+WORDPRESS PARA FACILITAR O ACESSO A TODAS AS APLICAÇÕES E COMEÇAR A CRIAR UMA INTEGRAÇÃO 
+DE TODAS AS TECNOLOGIAS ESTUDAS ATÉ AGORA.
+
+=========================================================================================
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WAR-TOMCAT SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do War-Tomcat realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS: #boraparapratica #boraparaprática #vaamonde
-#robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/07-tomcat-war.png
+
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiotomcat #desafiowartomcat

@@ -7,19 +7,19 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 16/01/2023<br>
-#Data de atualização: 24/11/2023<br>
-#Versão: 0.09<br>
+#Data de atualização: 06/04/2023<br>
+#Versão: 0.15<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO APACHE2 SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do Apache2 realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
 
-LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selo/desafio.png
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/02-apache2.png
 
 #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioapache2 #desafioapache
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Instalado o Apache2 e PHP8 no Ubuntu Server;<br>
@@ -33,7 +33,7 @@ Conteúdo estudado nesse desafio:<br>
 #09_ Criando Páginas em HTML e PHP para testar o Apache2;<br>
 #10_ Utilizando o VSCode para editar páginas HTML e PHP;<br>
 #11_ Testando o acesso as Páginas no Navegador do Apache2;<br>
-#12_ Desafio do Novo Projeto e Usuários do Web Server Apache2.
+#12_ Desafio do Novo Projeto de Site e Usuários do Apache2.
 
 Site Oficial do Apache2: https://httpd.apache.org/<br>
 Site Oficial do PHP (7.x ou 8.x): https://www.php.net/
@@ -46,6 +46,14 @@ Site Oficial do W3C School PHP: https://www.w3schools.com/php/default.asp
 O Servidor HTTP Apache ou Servidor Apache ou HTTP Daemon Apache ou somente Apache, é o servidor<br>
 web livre criado em 1995 por um grupo de desenvolvedores da NCSA, tendo como base o servidor<br>
 web NCSA HTTPd criado por Rob McCool.
+
+PHP é uma linguagem interpretada livre, usada originalmente apenas para o desenvolvimento de<br>
+aplicações presentes e atuantes no lado do servidor, capazes de gerar conteúdo dinâmico na<br> 
+World Wide Web.
+
+[![Apache2 Server](http://img.youtube.com/vi/p6fnF1fZ1j4/0.jpg)](https://www.youtube.com/watch?v=p6fnF1fZ1j4 "Apache2 Server")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=p6fnF1fZ1j4
 
 #01_ Instalando o Apache2 Server e PHP 8.x<br>
 
@@ -67,9 +75,14 @@ web NCSA HTTPd criado por Rob McCool.
 	#verificando o serviço do Apache2 Server
 	sudo systemctl status apache2
 	sudo systemctl restart apache2
+	sudo systemctl reload apache2
 	sudo systemctl stop apache2
 	sudo systemctl start apache2
 
+	#analisando os Log's e mensagens de erro do Servidor do Apache2 (NÃO COMENTADO NO VÍDEO)
+	#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+	sudo journalctl -xeu apache2
+	
 	#verificando as versões do Apache2 Server e do PHP
 	#opção do comando apache2ctl: -V (version)
 	#opção do comando php: -v (version)
@@ -78,6 +91,11 @@ web NCSA HTTPd criado por Rob McCool.
 
 #03_ Verificando a Porta de Conexão do Apache2 Server<br>
 
+	#OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
+	#iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
+	#algum recurso de Firewall é necessário fazer a liberação do Fluxo de Entrada, Porta 
+	#e Protocolo TCP do Serviço corresponde nas tabelas do firewall e testar a conexão.
+	
 	#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
 	sudo lsof -nP -iTCP:'80' -sTCP:LISTEN
 
@@ -92,7 +110,7 @@ web NCSA HTTPd criado por Rob McCool.
 	/var/www/html/                 <-- Diretório padrão das Hospedagem de Site do Apache 2 Server
 	/var/log/apache2/              <-- Diretório padrão dos Logs do Apache 2 Server
 
-#05_ Adicionado o Usuário Local no Grupo Padrão do Apache2 Server<br>
+#05_ Adicionando o Usuário Local no Grupo Padrão do Apache2 Server<br>
 
 	#adicionando o seu usuário no grupo do Apache2
 	#opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
@@ -106,9 +124,9 @@ web NCSA HTTPd criado por Rob McCool.
 	
 	#recomendo fazer logout do usuário para testar as permissões de grupos
 	#OBSERVAÇÃO: você pode utilizar o comando: exit ou tecla de atalho: Ctrl +D
-	logout
+	exit
 
-	#OBSERVAÇÃO IMPORTANTE: caso a conexão SSH trave, utile os caracteres de escape para 
+	#OBSERVAÇÃO IMPORTANTE: caso a conexão SSH trave, utilize os caracteres de escape para 
 	#finalizar conexões SSH.
 	#caracteres: ~ (til) e . (ponto)
 	~.
@@ -123,12 +141,12 @@ web NCSA HTTPd criado por Rob McCool.
 		sudo mkdir -v teste
 		
 		#alterando as permissões do diretório de teste
-		#opção do comando chmod: -v (verbose), 775 (User=RWX,Group=RWX,Other=R-X)
-		sudo chmod -v 775 teste/
+		#opção do comando chmod: -R (recursive), -v (verbose), 2775 (Set-GID=2,User=RWX,Group=RWS,Other=R-X)
+		sudo chmod -Rv 2775 teste/
 		
 		#alterando o dono e grupo do diretório de teste
-		#opção do comando chown: -v (verbose), root (User), . (separate), www-date (group)
-		sudo chown -v root.www-data teste/
+		#opção do comando chown: -R (recursive), -v (verbose), root (User), . (separate), www-date (group)
+		sudo chown -Rv root.www-data teste/
 		
 		#acessando o diretório criado
 		cd teste
@@ -140,7 +158,12 @@ web NCSA HTTPd criado por Rob McCool.
 
 	#OBSERVAÇÃO IMPORTANTE: no Microsoft Windows utilizando o Powershell no processo de copiar e colar
 	#o código HTML ou PHP ele desconfigura o código, recomendo no Windows utilizar o software PuTTY 
-	#para editar os códigos ou copiar e colar.
+	#para editar os códigos ou copiar e colar. No Linux Mint e macOS essa falha não acontece.
+
+	#OBSERVAÇÃO: tanto no Microsoft Windows como no GNU/Linux (Linux Mint, Ubuntu Desktop, etc) ou no
+	#macOS recomendo sempre utilizar o Editor de Texto em Modo Gráfico IDE Microsoft Visual Studio, por
+	#padrão ele já entende toda a codificação HTML, PHP, JavaScript, JSON, etc..., facilitando a criação
+	#e modificação arquivos desse curso.
 
 	#criando o arquivo em HTML
 	sudo vim seu_nome.html
@@ -158,11 +181,11 @@ web NCSA HTTPd criado por Rob McCool.
 			Autor: Robson Vaamonde<br>
 			Editado por: SEU NOME AQUI<br>
 			Linkedin: <a href="https://www.linkedin.com/in/robson-vaamonde-0b029028/">Robson Vaamonde</a><br>
-			Site: <a href="procedimentosemti.com.br">procedimentosemti.com.br</a><br>
-			Facebook: <a href="facebook.com/ProcedimentosEmTI"> Procedimentos Em TI</a><br>
-			Facebook: <a href="facebook.com/BoraParaPratica">Bora Para Pratica</a><br>
+			Site: <a href="http://procedimentosemti.com.br/">procedimentosemti.com.br</a><br>
+			Facebook: <a href="https://www.facebook.com/ProcedimentosEmTI"> Procedimentos Em TI</a><br>
+			Facebook: <a href="https://www.facebook.com/BoraParaPratica">Bora Para Pratica</a><br>
 			Instagram: <a href="https://www.instagram.com/procedimentoem/?hl=pt-br">Procedimentos Em TI</a><br>
-			YouTube: <a href="youtube.com/BoraParaPratica">Bora Para Pratica</a><br>
+			YouTube: <a href="https://www.youtube.com/BoraParaPratica">Bora Para Pratica</a><br>
 		</body>
 	</html>
 ```
@@ -185,12 +208,12 @@ web NCSA HTTPd criado por Rob McCool.
 				echo '<h1>Teste da Linguagem HTML (HyperText Markup Language)</h1>';
 				echo 'Autor: Robson Vaamonde<br>';
 				echo 'Editado por: SEU NOME AQUI<br>';
-				echo 'Linkedin: linkedin.com/in/robson-vaamonde-0b029028/<br>';
-				echo 'Site: procedimentosemti.com.br<br>';
-				echo 'Facebook: facebook.com/ProcedimentosEmTI<br>';
-				echo 'Facebook: facebook.com/BoraParaPratica<br>';
-				echo 'Instagram: instagram.com/procedimentoem/<br>';
-				echo 'YouTube: youtube.com/BoraParaPratica<br>'; 
+				echo 'Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>';
+				echo 'Site: http://procedimentosemti.com.br/<br>';
+				echo 'Facebook: https://www.facebook.com/ProcedimentosEmTI<br>';
+				echo 'Facebook: https://www.facebook.com/BoraParaPratica<br>';
+				echo 'Instagram: https://www.instagram.com/procedimentoem/<br>';
+				echo 'YouTube: https://youtube.com/BoraParaPratica<br>'; 
 			?>
 		</body>
 	</html>
@@ -204,7 +227,7 @@ web NCSA HTTPd criado por Rob McCool.
 
 ```php
 <?php
-	/** Módulo do PHP para gerar a página de documentação e parâmetros do PHP*/
+	/** Função do PHP para gerar a página de documentação e parâmetros do PHP*/
 	phpinfo(); 
 ?>
 ```
@@ -223,14 +246,21 @@ MINÚSCULO) PARA UM NOVO SITE, DENTRO DO SEU DIRETÓRIO CRIAR UM NOVA PÁGINA EM
 NA PÁGINA.
 
 #10_ DESAFIO-02: NO SEU NOVO DIRETÓRIO CRIAR UM ARQUIVO EM PHP CHAMADO: seunome.php, ADICIONAR MAIS
-OPÇÕES DO PHP (VEJA O SITE W3SCHOOLS) TESTAR NO SEU NAVEGADOR.
+OPÇÕES DO PHP (VEJA O SITE W3SCHOOLS) TESTAR NO SEU NAVEGADOR. DICA: FAZER O HYPERLINK DAS PÁGINAS:
+index.html COM A PÁGINA PHP seunome.php PARA FACILITAR O ACESSO E COMEÇAR UM PROJETO DE SITE.
 
-#11_ DESAFIO-03: ADICIONAR O USUÁRIO: admin E O USUÁRIO: seu_usuário CRIADO NO SISTEMA NO GRUPO DO 
-APACHE2, TESTAR AS PERMISSÕES DE ACESSO NOS DIRETÓRIOS DO APACHE 2 E DOS SITES CRIADOS.
+#11_ DESAFIO-03: ADICIONAR O USUÁRIO: admin E O USUÁRIO: seu_usuário CRIADOS NO SISTEMA NO GRUPO DO 
+APACHE2, TESTAR AS PERMISSÕES DE ACESSO NOS DIRETÓRIOS DO APACHE2 E NOS DIRETÓRIOS DOS SITES CRIADOS.
+
+=========================================================================================
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO APACHE2 SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do Apache2 realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS: #boraparapratica #boraparaprática #vaamonde
-#robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
+
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/02-apache2.png
+
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioapache2 #desafioapache

@@ -7,19 +7,19 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 30/01/2023<br>
-#Data de atualização: 23/04/2023<br>
-#Versão: 0.08<br>
+#Data de atualização: 06/04/2024<br>
+#Versão: 0.18<br>
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WAR-TOMCAT SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO MONGODB SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do MongoDB realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTRAGRAM)
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
 MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
 
-LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selo/desafio.png
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/08-mongodb.png
 
 #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiomongodb #desafiocompass
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Instalando as Dependências do MongoDB Server<br>
@@ -38,13 +38,19 @@ Conteúdo estudado nesse desafio:<br>
 #14_ Desafios do Banco de Dados MongoDB Server.
 
 Site Oficial do MongoDB: https://www.mongodb.com/<br>
-Site Oficial do MongoDB Compass: https://www.mongodb.com/products/compass
+Site Oficial do MongoDB Compass: https://www.mongodb.com/products/compass<br>
+Site Oficial da MongoDB Atlas: https://www.mongodb.com/atlas/database
 
-Site Oficial do W3C School MongoDB: https://www.w3schools.com/mongodb/
+Site Oficial do W3C School MongoDB: https://www.w3schools.com/mongodb/<br>
+Site Oficial do W3C School JSON: https://www.w3schools.com/js/js_json.asp
 
 MongoDB é um software de banco de dados orientado a documentos livre, de código aberto e<br>
 multiplataforma, escrito na linguagem C++. Classificado como um programa de banco de dados<br>
 NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
+
+[![MongoDB Server](http://img.youtube.com/vi/qs-zRXaSmuM/0.jpg)](https://www.youtube.com/watch?v=qs-zRXaSmuM "MongoDB Server")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=qs-zRXaSmuM
 
 #01_ Instalando as Dependências do MongoDB Server<br>
 
@@ -53,49 +59,69 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 
 	#instalando as dependências do MongoDB Server
 	sudo apt install git vim build-essential software-properties-common gnupg apt-transport-https ca-certificates
-	
+
+	#download da última versão do Libssl (link atualizado em 06/03/2024)
+	#OBSERVAÇÃO IMPORTANTE: o tempo todo a Biblioteca Libssl sofre alteração, antes de faze o download do 
+	#arquivo verifique a versão no link: http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/
 	#opção do comando dpkg: -i (install)
-	wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
+	wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb
 	sudo dpkg -i libssl*.deb
 
 #02_ Baixando e instalando a Chave GPG do MongoDB Server<br>
 
+	#download da Chave GPG do MongoDB Server (VERSÃO ESTÁVEL ATÉ O MOMENTO: 7.0 EM: 06/04/2024)
+	#OBSERVAÇÃO IMPORTANTE: o MongoDB Server possui várias versões, para verificar as
+	#chaves GPG de cada versão acesse o link: https://www.mongodb.org/static/pgp/
 	#opção do comando curl: -f (fail), -s (silent), -S (show-error), -L (location)
 	#opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
 	#opção do comando gpg: -o (output)
-	curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-6.gpg
+	curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
 
 #03_ Criando o repositório do MongoDB Server<br>
 
 	#opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
-	echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+	echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
 #04_ Atualizando as Lista do Apt com o novo Repositório do MongoDB Server<br>
 
+	#atualizando as listas do Apt
 	sudo apt update
 
 #05_ Instalando o MongoDB Server e Client<br>
 
+	#instalando o MongoDB Server e Client (Console)
 	sudo apt install mongodb-org
 
 #06_ Habilitando o Serviço do MongoDB Server<br>
 
+	#habilitando o serviço do MongoDB Server
 	sudo systemctl daemon-reload
 	sudo systemctl enable mongod
 	sudo systemctl start mongod
 
 #07_ Verificando o Serviço e Versão do MongoDB Server e do Client<br>
 
+	#verificando o serviço do MongoDB Server
 	sudo systemctl status mongod
 	sudo systemctl restart mongod
 	sudo systemctl stop mongod
 	sudo systemctl start mongod
 
+	#analisando os Log's e mensagens de erro do Servidor do MongoDB (NÃO COMENTADO NO VÍDEO)
+	#opção do comando journalctl: -t (identifier), x (catalog), e (pager-end), u (unit)
+	sudo journalctl -t mongod
+	sudo journalctl -xeu mongod
+
 	#verificando as versões do MongoDB Server e do Client
-	mongod --version
-	mongosh --version
+	sudo mongod --version
+	sudo mongosh --version
 
 #08_ Verificando a Porta de Conexão do MongoDB Server<br>
+
+	#OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
+	#iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
+	#algum recurso de Firewall é necessário fazer a liberação do Fluxo de Entrada, Porta 
+	#e Protocolo TCP do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
 	#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
 	sudo lsof -nP -iTCP:'27017' -sTCP:LISTEN
@@ -118,11 +144,12 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 
 #11_ Testando a Conexão Local com o MongoDB Server<br>
 
+	#acessando o MongoDB Server via Client (MongoDB Shell/Console)
 	mongosh
 
 #12_ Comandos Básicos do MongoDB Server<br>
 
-	#exibir os bancos de dados existentes no MongoDB
+	#exibindo os bancos de dados existentes no MongoDB
 	show dbs
 
 	#alterar o database informe no MongoDB
@@ -139,19 +166,28 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 
 #13_ Criando o usuário de administração do MongoDB Server<br>
 
+	#acessando o MongoDB Server via Client (MongoDB Shell/Console)
 	mongosh
 	
 	#alterar o database informe no MongoDB
 	use admin
 
-	#criando o usuário admin e suas roles (papéis) do MongoDB
-	db.createUser(
-	{
-		user: "admin",
-		pwd: "pti@2018",
-		roles: [ "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase" ]
-	}
-	)
+	#OBSERVAÇÃO IMPORTANTE: na gravação do vídeo não consta os dois papeis que foram adicionados
+	#posteriormente na linha roles: "root" e "clusterAdmin", conforme testes e comentários nos
+	#vídeos, no momento do desenvolvimento de aplicações utilizando o Node.JS junto com o recurso
+	#de conexão com o MongoDB utilizando o Mongoose acontecia uma falha de: "Erro de permissão",
+	#essa falha foi corrigida adicionando essas "Roles" e também na conexão com o Banco de Dados
+	#foi adicionado a opção: ?authSource=admin 
+
+```json
+db.createUser(
+{
+	user: "admin",
+	pwd: "pti@2018",
+	roles: [ "root", "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase", "clusterAdmin" ]
+}
+)
+```
 
 	#visualizando os usuários do MongoDB
 	db.getUsers()
@@ -159,25 +195,25 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 	#saindo do MongoDB
 	exit
 
-#14_ Configurando o MongoDB Server para suportar autenticação e acesso Remoto<br>
+#14_ Configurando o MongoDB Server para suportar autenticação e Acesso Remoto<br>
 
+	#editando o arquivo de configuração do MongoDB Server
 	sudo vim /etc/mongod.conf
+	INSERT
 		
-		INSERT
-			
-			#habilitando o suporte remoto do MongoDB Server
-			#alterar a linha: bindIp: 127.0.0.1 para: bindIp: 0.0.0.0
-			net:
-			  port: 27017
-			  bindIp: 0.0.0.0
-			
-			#habilitando o recurso de autenticação do MongoDB Server
-			#descomentar a linha: #security, adicionar o valor: authorization: enabled
-			security:
-			  authorization: enabled
+		#habilitando o suporte remoto do MongoDB Server na linha: 18
+		#alterar a linha: bindIp: 127.0.0.1 para: bindIp: 0.0.0.0
+		net:
+		  port: 27017
+		  bindIp: 0.0.0.0
 		
-		#sair e salvar o arquivo
-		ESC SHIFT :x <ENTER>
+		#habilitando o recurso de autenticação do MongoDB Server na linha: 28
+		#descomentar a linha: #security, adicionar o valor: authorization: enabled
+		security:
+		  authorization: enabled
+	
+	#salvar e sair do arquivo
+	ESC SHIFT :x <ENTER>
 
 	#reiniciar o serviço do MongoDB Server
 	sudo systemctl restart mongod
@@ -204,7 +240,9 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 
 #16_ Integrando o MongoDB Server com o Compass GUI<br>
 
-	#criando uma nova conexão
+	Link de download do MongoDB Compass: https://www.mongodb.com/products/tools/compass
+
+	#criando uma nova conexão com o MongoDB Server
 	<New connection+>
 		New Connection
 			URL: mongodb://172.16.120:27017
@@ -231,7 +269,7 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 				MongoDB for VS Code
 					Instalar
 
-	#configurando a conexão com o MongoDB
+	#configurando a conexão com o MongoDB Server
 	VSCode
 		MongoDB
 			CONNECTIONS
@@ -249,10 +287,29 @@ NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 						<Connect>
 					<Close>
 
-#18_ DESAFIO: CRIAR UM BANCO DE DADOS COM O: seu_nome (TUDO EM MINÚSCULO), DENTRO DESSE BANCO 
+#18_ DESAFIO-01: CRIAR UM BANCO DE DADOS COM O: seu_nome (TUDO EM MINÚSCULO), DENTRO DESSE BANCO 
 DE DADOS CRIAR UM COLLECTION CHAMADO: cadastro (TUDO EM MINÚSCULO) E DENTRO DESSE COLLECTION
 INSERIR OS DOCUMENTS: nome: Seu Nome, idade: Sua Idade LISTAR AS INFORMAÇÕES NO VSCODE OU NO
 COMPASS (VEJA O SITE W3SCHOOLS).
 
+#19_ DESAFIO-02: CONHECER O PROJETO: MongoDB Atlas, FAZER O CADASTRO NO SITE OFFICIAL PARA A 
+CRIAÇÃO DE UMA CONTA FREE NO LINK: https://www.mongodb.com/cloud/atlas/register, ESCOLHER A
+OPÇÃO: LEARN FREE, FINALIZAR O CADASTRO CRIANDO UM USUÁRIO E FAZER A CRIAÇÃO DO MESMO BANCO
+DE DADOS DO DESAFIO-O1, TESTAR A CONEXÃO NO MONGODB COMPASS E NO VSCODE. OBSERVAÇÃO: VEJA A
+DOCUMENTAÇÃO NA OPÇÃO DE: CONNECT EM: MongoDB for VS Code, CUIDADO PRINCIPALMENTE COM AS
+OPÇÕES DE CARACTERES ESPECIAIS NA SENHA, VEJA A DOCUMENTAÇÃO ABAIXO:
+
+https://www.mongodb.com/docs/atlas/troubleshoot-connection/#special-characters-in-connection-string-password
+
+=========================================================================================
+
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO MONGODB SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do MongoDB realizado com sucesso!!! #BoraParaPrática
+
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
+MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+
+LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/08-mongodb.png
+
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
+#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiomongodb #desafiocompass
