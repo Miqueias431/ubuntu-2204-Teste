@@ -7,8 +7,8 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 16/01/2023<br>
-#Data de atualização: 06/04/2024<br>
-#Versão: 0.14<br>
+#Data de atualização: 29/05/2024<br>
+#Versão: 0.16<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WAR-TOMCAT SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do War-Tomcat realizado com sucesso!!! #BoraParaPrática
@@ -68,6 +68,9 @@ Link da vídeo aula: https://www.youtube.com/watch?v=DTduw0NKQvo
 
 	LINK DE DOWNLOAD DO ARQUIVO WAR: https://github.com/vaamonde/ubuntu-2204/tree/main/war
 
+	a) arquivo: agenda.war versão antiga atualizada pela Prof(a). Sirlene Sanches;<br>
+	b) arquivo: agenda_bootstrap.war versão nova atualizada pela Prof(a). Sirlene Sanches.
+
 #02_ Acessando o Apache TomCAT Server pelo Navegador<br>
 
 	firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080
@@ -92,8 +95,10 @@ Link da vídeo aula: https://www.youtube.com/watch?v=DTduw0NKQvo
 
 #04_ Criando a Base de Dados no MySQL Server do projeto da Agenda em JavaEE<br>
 
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u root -p
+```bash
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u root -p
+```
 
 ```sql
 /* Criando o Banco de Dados DBAgenda */
@@ -130,11 +135,13 @@ exit
 
 #05_ Testando o acesso a Base de Dados DBAgenda com o usuário dbagenda<br>
 
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u dbagenda -p
+```bash
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u dbagenda -p
+```
 
 ```sql
-#comandos básicos de verificação da base de dados e tabelas do MySQL
+/* comandos básicos de verificação da base de dados e tabelas do MySQL */
 SHOW DATABASES;
 USE dbagenda;
 SHOW TABLES;
@@ -148,71 +155,70 @@ exit
 
 #07_ Fazendo o Backup e Restore do Banco de Dados DBAgenda no MySQL Server<br>
 
-	#OBSERVAÇÃO IMPORTANTE: para esse teste, recomendo adicionar vários registros no Banco
-	#de Dados do DBAgenda, para verificar os procedimentos de Dump do Banco e Restore das
-	#informações.
+```bash
+#OBSERVAÇÃO IMPORTANTE: para esse teste, recomendo adicionar vários registros no Banco
+#de Dados do DBAgenda, para verificar os procedimentos de Dump do Banco e Restore das
+#informações.
 
-	#fazendo o backup do banco de dados DBAgenda
-	#opções do comando mysqldump: -u (user), -p (password), database
-	#opção do redirecionador de saída >: Redireciona a saída padrão (STDOUT)
-	sudo mysqldump -u root -p dbagenda > bkp-dbagenda.sql
+#fazendo o backup do banco de dados DBAgenda
+#opções do comando mysqldump: -u (user), -p (password), database
+#opção do redirecionador de saída >: Redireciona a saída padrão (STDOUT)
+sudo mysqldump -u root -p dbagenda > bkp-dbagenda.sql
 
-	#verificando o conteúdo do arquivo backupeado 
-	sudo less bkp-dbagenda.sql
+#verificando o conteúdo do arquivo backupeado 
+sudo less bkp-dbagenda.sql
 
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u dbagenda -p
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u dbagenda -p
+```
 
 ```sql
-#comandos básicos de verificação da base de dados e tabelas do MySQL
+/* comandos básicos de verificação da base de dados e tabelas do MySQL */
 SHOW DATABASES;
 USE dbagenda;
 SHOW TABLES;
 
-#verificando todos os registros da Tabela Contatos
+/* verificando todos os registros da Tabela Contatos */
 SELECT * FROM contatos;
 
-#removendo todos os registros da Tabela Contatos
+/* removendo todos os registros da Tabela Contatos */
 TRUNCATE TABLE contatos;
 SELECT * FROM contatos;
 exit
 ```
 
-	#restaurando o backup do banco de dados DBAgenda
-	#opções do comando mysql: -u (user), -p (password)
-	#opção do redirecionador de entrada <: Redireciona a entrada padrão (STDIN)
-	sudo mysql -u root -p dbagenda < bkp-dbagenda.sql
+```bash
+#restaurando o backup do banco de dados DBAgenda
+#opções do comando mysql: -u (user), -p (password)
+#opção do redirecionador de entrada <: Redireciona a entrada padrão (STDIN)
+sudo mysql -u root -p dbagenda < bkp-dbagenda.sql
 
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u dbagenda -p
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u dbagenda -p
+```
 
 ```sql
-#comandos básicos de verificação da base de dados e tabelas do MySQL
+/* comandos básicos de verificação da base de dados e tabelas do MySQL */
 SHOW DATABASES;
 USE dbagenda;
 SHOW TABLES;
 
-#verificando todos os registros da Tabela Contatos
+/* verificando todos os registros da Tabela Contatos */
 SELECT * FROM contatos;
 exit
 ```
 	#acessar novamente a aplicação para verificar se voltou os registros
 	firefox ou google chrome: http://endereço_ipv4_ubuntuserver:8080/agenda
 
-#08_ DESAFIO-01: FAZER O DOWNLOAD E O DEPLOY DA APLICAÇÃO JAVA: Hello World DO PROJETO DO 
-GITHUB: https://github.com/vaamonde/ubuntu-2204/tree/main/war - APÓS O DEPLOY SERÁ CRIADO 
-O LINK DO APP: http://endereço_ipv4_ubuntuserver:8080/helloworld/
+========================================DESAFIOS=========================================
 
-#09_ DESAFIO-02: DELETAR A BASE DE DADOS: dbagenda E O USUÁRIO: dbagenda DO MYSQL SERVER
-(VEJA O SITE W3SCHOOLS), RECRIAR NOVAMENTE A BASE DE DADOS E USUÁRIO, IMPORTAR O BACKUP
-E TESTAR A CONEXÃO NO NAVEGADOR.
+**#08_ DESAFIO-01:** FAZER O DOWNLOAD E O DEPLOY DA APLICAÇÃO JAVA: __`Hello World`__ DO PROJETO DO GITHUB: https://github.com/vaamonde/ubuntu-2204/tree/main/war - APÓS O DEPLOY SERÁ CRIADO O LINK DO APP: http://endereço_ipv4_ubuntuserver:8080/helloworld/
 
-#10_ DESAFIO-03: FAZER O UNDEPLOY DA APLICAÇÃO: dbagenda E FAZER O DEPLOY NOVAMENTE,
-VERIFICAR SE O NOME MANTEVE O MESMO E O ACESSO AO BANCO DE DADOS FOI FEITO COM SUCESSO.
+**#09_ DESAFIO-02:** DELETAR A BASE DE DADOS: __`dbagenda`__ E O USUÁRIO: __`dbagenda`__ DO MYSQL SERVER (VEJA O SITE W3SCHOOLS), RECRIAR NOVAMENTE A BASE DE DADOS E USUÁRIO, IMPORTAR O BACKUP E TESTAR A CONEXÃO NO NAVEGADOR.
 
-#11_ DESAFIO-04: ADICIONAR OS LINKS DOS DESAFIOS DO WAR TOMCAT DA AGENDA E DO SAMPLE NO 
-WORDPRESS PARA FACILITAR O ACESSO A TODAS AS APLICAÇÕES E COMEÇAR A CRIAR UMA INTEGRAÇÃO 
-DE TODAS AS TECNOLOGIAS ESTUDAS ATÉ AGORA.
+**#10_ DESAFIO-03:** FAZER O UNDEPLOY DA APLICAÇÃO: __`dbagenda`__ E FAZER O DEPLOY NOVAMENTE, VERIFICAR SE O NOME MANTEVE O MESMO E O ACESSO AO BANCO DE DADOS FOI FEITO COM SUCESSO.
+
+**#11_ DESAFIO-04:** ADICIONAR OS LINKS DOS DESAFIOS DO WAR TOMCAT DA AGENDA E DO SAMPLE NO WORDPRESS PARA FACILITAR O ACESSO A TODAS AS APLICAÇÕES E COMEÇAR A CRIAR UMA INTEGRAÇÃO DE TODAS AS TECNOLOGIAS ESTUDAS ATÉ AGORA.
 
 =========================================================================================
 

@@ -7,8 +7,8 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 14/01/2023<br>
-#Data de atualização: 06/04/2024<br>
-#Versão: 0.14<br>
+#Data de atualização: 29/05/2024<br>
+#Versão: 0.15<br>
 
 OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO MYSQL SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
 A SEGUINTE FRASE: Desafio do Mysql realizado com sucesso!!! #BoraParaPrática
@@ -52,54 +52,63 @@ Link da vídeo aula: https://www.youtube.com/watch?v=7tl4TuxhuKg
 
 #01_ Instalando o MySQL Server e Client<br>
 
-	#atualizando as listas do Apt
-	sudo apt update
-	
-	#instalando o MySQL Server e Client
-	sudo apt install git vim libproj22 proj-data mysql-server-8.0 mysql-client-8.0 
+```bash	
+#atualizando as listas do Apt
+sudo apt update
+
+#instalando o MySQL Server e Client
+sudo apt install git vim libproj22 proj-data mysql-server-8.0 mysql-client-8.0 
+```
 
 #02_ Verificando o Serviço e Versão do MySQL Server<br>
 
-	#verificando o serviço do MySQL Server
-	sudo systemctl status mysql
-	sudo systemctl restart mysql
-	sudo systemctl stop mysql
-	sudo systemctl start mysql
+```bash
+#verificando o serviço do MySQL Server
+sudo systemctl status mysql
+sudo systemctl restart mysql
+sudo systemctl stop mysql
+sudo systemctl start mysql
 
-	#verificando as versões do MySQL Server e Client
-	sudo mysqld --version
-	sudo mysql --version
+#verificando as versões do MySQL Server e Client
+sudo mysqld --version
+sudo mysql --version
+```
 
 #03_ Verificando a Porta de Conexão do MySQL Server<br>
 
-	#OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
-	#iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
-	#algum recurso de Firewall é necessário fazer a liberação do Fluxo de Entrada, Porta 
-	#e Protocolo TCP do Serviço corresponde nas tabelas do firewall e testar a conexão.
+```bash	
+#OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
+#iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
+#algum recurso de Firewall é necessário fazer a liberação do Fluxo de Entrada, Porta 
+#e Protocolo TCP do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
-	#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
-	sudo lsof -nP -iTCP:'3306' -sTCP:LISTEN
+#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
+sudo lsof -nP -iTCP:'3306' -sTCP:LISTEN
+```
 
 #04_ Localização dos Arquivos de Configuração do MySQL Server<br>
 
-	/etc/mysql                          <-- Diretório de configuração do SGBD MySQL Server
-	/etc/mysql/mysql.conf.d/mysqld.cnf  <-- Arquivo de configuração do Servidor SGBD do MySQL Server
-	/etc/mysql/mysql.conf.d/mysql.cnf   <-- Arquivo de configuração do Cliente SGBD do MySQL Client
-	/var/log/mysql                      <-- Diretório padrão dos Logs do SGBD Mysql Server
-	/var/lib/mysql                      <-- Diretório da Base de Dados padrão do SGBD MySQL Server
+```bash	
+/etc/mysql                          <-- Diretório de configuração do SGBD MySQL Server
+/etc/mysql/mysql.conf.d/mysqld.cnf  <-- Arquivo de configuração do Servidor SGBD do MySQL Server
+/etc/mysql/mysql.conf.d/mysql.cnf   <-- Arquivo de configuração do Cliente SGBD do MySQL Client
+/var/log/mysql                      <-- Diretório padrão dos Logs do SGBD Mysql Server
+/var/lib/mysql                      <-- Diretório da Base de Dados padrão do SGBD MySQL Server
+```
 
 #05_ Acessando o MySQL Server utilizando o MySQL Client (Console)<br>
 
-	#OBSERVAÇÃO IMPORTANTE: por padrão o usuário Root do MySQL Server não tem senha para
-	#se logar no MySQL Client Console.
+```bash	
+#OBSERVAÇÃO IMPORTANTE: por padrão o usuário Root do MySQL Server não tem senha para
+#se logar no MySQL Client Console.
 
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u root -p
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u root -p
+```
 
 #06_ Aplicando a segurança de acesso do usuário Root no MySQL Server<br>
 
 ```sql
-
 /* visualizando as bases de dados do MySQL */
 SHOW DATABASES;
 
@@ -125,15 +134,15 @@ FLUSH PRIVILEGES;
 /* saindo do MySQL Client Console */
 exit
 ```
-
-	#testando novamente o acesso ao MySQL Server agora com senha
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u root -p
+```bash	
+#testando novamente o acesso ao MySQL Server agora com senha
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u root -p
+```
 
 #07_ Criando um usuário DBA (Data Base Administrator) no MySQL Server<br>
 
 ```sql
-
 /* criando o usuário DBA Localhost */
 /* OBSERVAÇÃO: ALTERAR A SENHA DO USUÁRIO DBA CONFORME A SUA NECESSIDADE */
 CREATE USER 'dba'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pti@2018';
@@ -150,13 +159,13 @@ SELECT user,host FROM mysql.user WHERE user='dba';
 /* saindo do MySQL Client Console */
 exit
 ```
-
-	#se logando com o usuário dba para testar a conexão com o MySQL Server
-	#opções do comando mysql: -u (user), -p (password)
-	sudo mysql -u dba -p
+```bash	
+#se logando com o usuário dba para testar a conexão com o MySQL Server
+#opções do comando mysql: -u (user), -p (password)
+sudo mysql -u dba -p
+```
 
 ```sql
-
 /* visualizando as bases de dados do MySQL */
 SHOW DATABASES;
 
@@ -166,53 +175,57 @@ exit
 
 #08_ Adicionando o Usuário Local no Grupo Padrão do MySQL Server<br>
 
-	#opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
-	sudo usermod -a -G mysql $USER
-	newgrp mysql
-	id
-	
-	#recomendo fazer logout do usuário para testar as permissões de grupos 
-	exit
+```bash	
+#opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
+sudo usermod -a -G mysql $USER
+newgrp mysql
+id
 
-	#opções do comando mysql: -u (user), -p (password)
-	mysql -u dba -p
+#recomendo fazer logout do usuário para testar as permissões de grupos
+#OBSERVAÇÃO: você pode utilizar o comando: exit ou tecla de atalho: Ctrl +D
+exit
+
+#opções do comando mysql: -u (user), -p (password)
+mysql -u dba -p
+```
 
 #09_ Permitindo o Root do MySQL se Logar Remotamente no MySQL Client Console<br>
-	
-	#fazendo o backup do arquivo de configuração do MySQL Server
-	#opção do comando cp: -v (verbose)
-	sudo cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old
-	
-	#editar o arquivo de configuração do MySQL Server
-	sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
-	INSERT
-	
-		#alterar a linha: 31 variável do: bind-address = 127.0.0.1 para: 0.0.0.0
-		bind-address = 0.0.0.0
 
-		#comentar a linha:32 da variável do: mysqlx-bind-address
-		#mysqlx-bind-address = 127.0.0.1
+```bash		
+#fazendo o backup do arquivo de configuração do MySQL Server
+#opção do comando cp: -v (verbose)
+sudo cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old
 
-	#salvar e sair do arquivo	
-	ESC SHIFT :x <Enter>
+#editar o arquivo de configuração do MySQL Server
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+INSERT
 
-	#testando o arquivo de configuração do MySQL SERVER (NÃO COMENTADO NO VÍDEO)
-	#opção do comando mysqld: --validate-config (checked for problems without running the server)
-	sudo mysqld --validate-config
+	#alterar a linha: 31 variável do: bind-address = 127.0.0.1 para: 0.0.0.0
+	bind-address = 0.0.0.0
 
-	#reiniciar o serviço do MySQL Server
-	sudo systemctl restart mysql
-	sudo systemctl status mysql
+	#comentar a linha:32 da variável do: mysqlx-bind-address
+	#mysqlx-bind-address = 127.0.0.1
 
-	#analisando os Log's e mensagens de erro do Servidor do MySQL (NÃO COMENTADO NO VÍDEO)
-	#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
-	sudo journalctl -xeu mysql
+#salvar e sair do arquivo	
+ESC SHIFT :x <Enter>
 
-	#acessar o MySQL Server como Root
-	sudo mysql -u root -p
+#testando o arquivo de configuração do MySQL SERVER (NÃO COMENTADO NO VÍDEO)
+#opção do comando mysqld: --validate-config (checked for problems without running the server)
+sudo mysqld --validate-config
+
+#reiniciar o serviço do MySQL Server
+sudo systemctl restart mysql
+sudo systemctl status mysql
+
+#analisando os Log's e mensagens de erro do Servidor do MySQL (NÃO COMENTADO NO VÍDEO)
+#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+sudo journalctl -xeu mysql
+
+#acessar o MySQL Server como Root
+sudo mysql -u root -p
+```
 
 ```sql
-
 /* criando o usuário Root Remoto do MySQL Server */
 /* OBSERVAÇÃO: ALTERAR A SENHA DO USUÁRIO ROOT CONFORME A SUA NECESSIDADE */
 CREATE USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'pti@2018';
@@ -230,10 +243,10 @@ exit
 	#OBSERVAÇÃO IMPORTANTE: após a conexão com o MySQL Server utilizando MySQL Workbench somente o
 	#Banco de Dados Sys (Sistema) é mostrado em Esquemas, os demais Banco de Dados utilizados pelo
 	#MySQL Server não são mostrados por motivo de segurança.
-	
+
 	#Link para download do MySQL Workbench: https://dev.mysql.com/downloads/workbench/
 
-	#conectando com o usuário Root do MySQL no Workbench
+	#conectando com o usuário Root Remoto do MySQL no Workbench
 	MySQL Connections: +
 		Connection Name: wsvaamonde
 		Connection Method: Standard (TCP/IP)
@@ -275,34 +288,21 @@ exit
 						Password: pti@2018 (alterar a senha do usuário root do seu servidor)
 				<Save>
 
-#12_ DESAFIO-01: CRIAR UM BANCO DE DADOS COM O: seu_nome (TUDO EM MINÚSCULO), DENTRO DESSE 
-BANCO DE DADOS CRIAR UMA TABELA COM O: seu_nome (TUDO EM MINÚSCULO) COM AS SEGUINTES COLUNAS: 
-Nome (Tipo Texto) e Idade (Tipo Numérico) (TUDO EM MINÚSCULO), DENTRO DESSA TABELA CRIAR UM 
-REGISTRO COM: Seu Nome e Sua Idade (VEJA O SITE W3SCHOOLS). OBSERVAÇÃO IMPORTANTE: NÃO PRECISA 
-CRIAR CHAVE PRIMÁRIA (Primary Key) NA SUA TABELA.
+========================================DESAFIOS=========================================
 
-#13_ DESAFIO-02: ADICIONAR O USUÁRIO: admin E O USUÁRIO: seu_usuário CRIADOS NO PROCEDIMENTO
-DE CONFIGURAÇÃO DO OPENSSH NO GRUPO DO MYSQL PARA ADMINISTRAR O SERVIDOR SEM A NECESSIDADE 
-DO COMANDO SUDO.
+**#12_ DESAFIO-01:** CRIAR UM BANCO DE DADOS COM O: __`seu_nome`__ (TUDO EM MINÚSCULO), DENTRO DESSE BANCO DE DADOS CRIAR UMA TABELA COM O: __`seu_nome`__ (TUDO EM MINÚSCULO) COM AS SEGUINTES COLUNAS: __`Nome (Tipo Texto)`__ e __`Idade (Tipo Numérico)`__ (TUDO EM MINÚSCULO), DENTRO DESSA TABELA CRIAR UM REGISTRO COM: __`Seu Nome e Sobrenome e Sua Idade`__ (VEJA O SITE W3SCHOOLS). **OBSERVAÇÃO IMPORTANTE:** NÃO PRECISA CRIAR CHAVE PRIMÁRIA (Primary Key) NA SUA TABELA.
 
-#14_ DESAFIO-03: CRIAR MAIS UM USUÁRIO NO MYSQL COM O SEU NOME: seu_nome, CONFIGURAR TODAS
-AS PERMISSÕES IGUAIS AO USUÁRIO DBA, TESTAR A CONEXÃO NO TERMINAL.
+**#13_ DESAFIO-02:** ADICIONAR O USUÁRIO: __`admin`__ E O USUÁRIO: __`seu_usuário`__ CRIADOS NO PROCEDIMENTO DE CONFIGURAÇÃO DO OPENSSH NO GRUPO DO __`MYSQL`__ PARA ADMINISTRAR O SERVIDOR SEM A NECESSIDADE DO COMANDO SUDO.
 
-#15_ DESAFIO-04: CRIAR OS USUÁRIO: dba E SEU NOME: seu_nome, CONFIGURAR TODAS AS PERMISSÕES
-IGUAIS AO USUÁRIO ROOT REMOTO, TESTAR A CONEXÃO NO TERMINAL, MYSQL WORKBENCH E VSCODE.
+**#14_ DESAFIO-03:** CRIAR MAIS UM USUÁRIO NO MYSQL COM O SEU NOME: __`seu_nome`__, CONFIGURAR TODAS AS PERMISSÕES IGUAIS AO USUÁRIO __`DBA`__, TESTAR A CONEXÃO NO TERMINAL.
 
-#16_ DESAFIO-04: CONHECER O PROJETO: DB4Free https://www.db4free.net/, NA OPÇÃO DE BANCO 
-DE DADOS, FAZER A CRIAÇÃO DE UM BANCO DE DADOS GRATUITO NA NUVEM (CLOUD) SEGUINDO O MESMO
-DESAFIO-01 DA ETAPA: 12 E DEPOIS TESTAR A CONEXÃO NO MYSQL WORKBENCH E VSCODE.
+**#15_ DESAFIO-04:** CRIAR OS USUÁRIOS: __`dba`__ E SEU NOME: __`seu_nome`__, CONFIGURAR TODAS AS PERMISSÕES IGUAIS AO USUÁRIO __`ROOT REMOTO`__, TESTAR A CONEXÃO NO TERMINAL, MYSQL WORKBENCH E VSCODE.
 
-OBSERVAÇÃO IMPORTANTE: APÓS O CADASTRO NO SITE DO DB4FREE, DEPENDENDO DA CONTA DE EMAIL QUE
-VOCÊ ESTÁ UTILIZANDO, O RECEBIMENTO DO EMAIL DE CONFIRMAÇÃO DE CADASTRO DEMORA OU PODE ESTÁ
-NA CAIXA DE SPAM DA SUA CONTA, VERIFICAR ANTES DE TENTAR O CADASTRO NOVAMENTE.
+**#16_ DESAFIO-05:** CONHECER O PROJETO: *DB4Free https://www.db4free.net/*, NA OPÇÃO DE BANCO DE DADOS, FAZER A CRIAÇÃO DE UM BANCO DE DADOS GRATUITO NA NUVEM (CLOUD) SEGUINDO O MESMO __`DESAFIO-01 DA ETAPA: 12`__ E DEPOIS TESTAR A CONEXÃO NO MYSQL WORKBENCH E VSCODE.
 
-OBSERVAÇÃO IMPORTANTE: APÓS VÁRIOS TESTES FEITO NO DB4FREE O MESMO APRESENTOU UM GRANDE DELAY
-NAS CONEXÕES, NO MYSQL WORKBENCH E NA EXTENSÃO DO VSCODE MUITAS VEZES É NECESSÁRIO ATUALIZAR
-VÁRIAS VEZES PARA MOSTRAR A BASE DE DADOS E AS TABELAS CRIADAS. PARA CORRIGIR ESSA FALHA NO
-VSCODE E NO MYSQL WORKBENCH RECOMENDO AUMENTAR O PARÂMETRO DE: Connect Timeout PARA 100000.
+**OBSERVAÇÃO IMPORTANTE:** APÓS O CADASTRO NO SITE DO DB4FREE, DEPENDENDO DA CONTA DE EMAIL QUE VOCÊ ESTÁ UTILIZANDO, O RECEBIMENTO DO EMAIL DE CONFIRMAÇÃO DE CADASTRO DEMORA OU PODE ESTÁ NA CAIXA DE SPAM DA SUA CONTA, VERIFICAR ANTES DE TENTAR O CADASTRO NOVAMENTE.
+
+**OBSERVAÇÃO IMPORTANTE:** APÓS VÁRIOS TESTES FEITO NO DB4FREE O MESMO APRESENTOU UM GRANDE DELAY NAS CONEXÕES, NO MYSQL WORKBENCH E NA EXTENSÃO DO VSCODE MUITAS VEZES É NECESSÁRIO ATUALIZAR VÁRIAS VEZES PARA MOSTRAR A BASE DE DADOS E AS TABELAS CRIADAS. PARA CORRIGIR ESSA FALHA NO VSCODE E NO MYSQL WORKBENCH RECOMENDO AUMENTAR O PARÂMETRO DE: Connect Timeout PARA 100000.
 
 =========================================================================================
 
