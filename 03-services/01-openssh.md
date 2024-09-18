@@ -7,19 +7,16 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 18/04/2023<br>
-#Data de atualização: 03/06/2024<br>
-#Versão: 0.14<br>
+#Data de atualização: 12/08/2024<br>
+#Versão: 0.17<br>
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/01-openssh.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioopenssh #desafiossh
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioopenssh #desafiossh
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Instalado o OpenSSH no Ubuntu Server;<br>
@@ -39,15 +36,13 @@ Site Oficial do OpenSSH: https://www.openssh.com/<br>
 Site Oficial do OpenSSL: https://www.openssl.org/<br>
 Site Oficial do PuTTY: https://www.putty.org/
 
-OpenSSH é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia<br> 
-em sessões de comunicações em uma rede de computadores usando o protocolo SSH.
+OpenSSH é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia em sessões de comunicações em uma rede de computadores usando o protocolo SSH.
 
 [![OpenSSH Server](http://img.youtube.com/vi/-cforvm_oV0/0.jpg)](https://www.youtube.com/watch?v=-cforvm_oV0 "OpenSSH Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=-cforvm_oV0
 
 #01_ Instalando o OpenSSH Server e Client no Ubuntu Server<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: executar a instalação somente se você no processo de instalar
 #o Ubuntu Server não marcou a opção: Install OpenSSH, caso contrário o mesmo já está
@@ -61,7 +56,6 @@ sudo apt install openssh-server openssh-client openssl
 ```
 
 #02_ Verificando o Serviço e Versão do OpenSSH Server e Client no Ubuntu Server<br>
-
 ```bash
 #verificando o serviço do OpenSSH Server
 sudo systemctl status ssh
@@ -76,7 +70,6 @@ sudo ssh -V
 ```
 
 #03_ Verificando a Porta de Conexão do OpenSSH Server<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
 #iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
@@ -89,7 +82,6 @@ sudo lsof -nP -iTCP:'22' -sTCP:LISTEN
 ```
 
 #04_ Localização dos Arquivos de Configuração do OpenSSH Server<br>
-
 ```bash
 /etc/ssh/             <-- Diretório de configuração do OpenSSH Server e Client
 /etc/ssh/sshd_config  <-- Arquivo de configuração do OpenSSH Server
@@ -103,7 +95,6 @@ sudo lsof -nP -iTCP:'22' -sTCP:LISTEN
 ```
 
 #05_ Habilitando a segurança de acesso ao OpenSSH Server<br>
-
 ```bash
 #editando o arquivo de configuração de Negação de Serviço e Host
 sudo vim /etc/hosts.deny
@@ -112,8 +103,9 @@ sudo vim /etc/hosts.deny
 ESC SHIFT :set number <Enter>
 INSERT
 
-	#inserir as informações na linha 17
+	#inserir as informações na linha: 17
 	#lista de serviço: lista de hosts: comando
+	#OBSERVAÇÃO: A OPÇÃO ALL: ALL BLOQUEIO TODOS OS SERVIÇOS (DAEMONS) E REDE/HOSTS.
 	ALL: ALL
 
 #salvar e sair do arquivo
@@ -126,7 +118,7 @@ sudo vim /etc/hosts.allow
 ESC SHIFT :set number <Enter>
 INSERT
 
-	#inserir as informações na linha 10
+	#inserir as informações na linha: 10
 	#lista de serviço: lista de hosts: comando
 	#OBSERVAÇÃO: ALTERAR A REDE OU ENDEREÇO IPv4 CONFORME A SUA NECESSIDADE
 	sshd: 172.16.1.0/24
@@ -136,32 +128,32 @@ ESC SHIFT :x <Enter>
 ```
 
 #06_ Atualizando e editando os arquivos de configuração do OpenSSH Server e do Banner<br>
-
 ```bash
 #fazendo o backup do arquivo de configuração do OpenSSH Server
 #opção do comando cp: -v (verbose)
 sudo cp -v /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 
-#atualizando o arquivo de configuração do OpenSSH Server
+#atualizando o arquivo de configuração do OpenSSH Server do Github
 #opção do comando wget: -v (verbose), -O (output file)
 sudo wget -v -O /etc/ssh/sshd_config https://raw.githubusercontent.com/vaamonde/ubuntu-2204/main/conf/sshd_config
 
-#atualizando arquivo de configuração do Banner do Ubuntu Server
+#atualizando arquivo de configuração do Banner do Ubuntu Server do Github
 sudo wget -v -O /etc/issue.net https://raw.githubusercontent.com/vaamonde/ubuntu-2204/main/conf/issue.net
 
 #editando o arquivo de configuração do OpenSSH Server
 sudo vim /etc/ssh/sshd_config
 INSERT
 
-	#alterar a variável ListenAddress na linha 27: ListenAddress 172.16.1.xxx para: SEU_ENDEREÇO_IPV4_DO_UBUNTU
+	#alterar a variável ListenAddress na linha: 27 
+	#ListenAddress 172.16.1.xxx para: SEU_ENDEREÇO_IPV4_DO_UBUNTU
 	#OBSERVAÇÃO: ALTERAR O ENDEREÇO IPv4 CONFORME A SUA NECESSIDADE
 	ListenAddress 172.16.1.20
 
-	#alterar a variável AllowUsers na linha 77:
+	#alterar a variável AllowUsers na linha: 77
 	#OBSERVAÇÃO: ALTERAR O USUÁRIO DE ACESSO CONFORME A SUA NECESSIDADE
 	AllowUsers vaamonde
 
-	#alterar a variável AllowGroups na linha 83:
+	#alterar a variável AllowGroups na linha: 83
 	#OBSERVAÇÃO: ALTERAR O GRUPO DE ACESSO CONFORME A SUA NECESSIDADE
 	AllowGroups vaamonde
 
@@ -194,40 +186,54 @@ sudo journalctl -xeu ssh
 ```
 
 #07_ Acessando remotamente o OpenSSH Server via Powershell e pelo software PuTTY<br>
+```bash
+#acessando o OpenSSH via Powershell
+Windows
+  Pesquisa do Windows
+    Powershell
+      ssh vaamonde@172.16.1.20 (alterar para o endereço IPv4 do seu servidor)
 
-	#acessando via Powershell
-	Windows
-		Pesquisa do Windows
-			Powershell
-				ssh vaamonde@172.16.1.20 (alterar para o endereço IPv4 do seu servidor)
+#acessando o OpenSSH via PuTTY
+Windows
+  Pesquisa do Windows
+    PuTTY
 
-	#acessando via PuTTY
-	Windows
-		Pesquisa do Windows
-			PuTTY
+Category
+  Session
+    Host Name (or IP address): vaamonde@172.16.1.20 (alterar para o endereço IPv4 do seu servidor)
+    Port: 22
+    SSH: On
+<Open>
 
-	Category
-		Session
-			Host Name (or IP address): vaamonde@172.16.1.20 (alterar para o endereço IPv4 do seu servidor)
-			Port: 22
-			SSH: On
-	<Open>
+#acessando o OpenSSH via Terminal no Linux Mint
+Linux
+  Terminal: Ctrl + Alt + T
+    ssh vaamonde@172.16.1.20 (alterar o usuário e endereço IPv4 do seu servidor)
 
-	#acessando via Terminal no Linux Mint
-	Linux
-		Terminal: Ctrl + Alt + T
-			ssh vaamonde@172.16.1.20 (alterar o usuário e endereço IPv4 do seu servidor)
+#verificando informações detalhadas dos usuários logados no Ubuntu Server
+#OBSERVAÇÃO IMPORTANTE 01: no comando: w ele mostra na primeira linhas as
+#informações de: Data e Hora Atual do Sistema, Período de Tempo Ativo, Número
+#de Usuários Logados e as Médias de Cargas do Sistema (1, 5 e 15 minutos).
+#OBSERVAÇÃO IMPORTANTE 02: no comando: w ele mostra as informações separadas
+#por colunas: USER (usuário logado), TTY (terminal do usuário), FROM (origem
+#da conexão), LOGIN@ (hora do login do usuário), IDLE (tempo ocioso do usuário), 
+#JCPU (tempo de CPU dos processo do TTY), PCPU (tempo de CPU do processo do
+#último comando o usuário), WHAT (processo atual do usuário).
+sudo w
 
-```bash	
 #verificando os usuários logados remotamente no Ubuntu Server
+#OBSERVAÇÃO IMPORTANTE: no comando: who ele mostra as informações separadas
+#por colunas: NAME (usuário logado), LINE (terminal do usuário), TIME (data e 
+#hora do login do usuário), IDLE (tempo ocioso do usuário), PID (identificação 
+#do processo), COMMENT (origem da conexão do usuário), EXIT ().
 #opção do comando who: -H (heading), -a (all)
-w
-who -Ha
+sudo who -Ha
+
+#verificando os usuários logados no Ubuntu Server
 users
 ```
 
 #08_ Criando um usuário Administrador no Ubuntu Server<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: NESSE EXEMPLO ESTÁ SENDO CRIADO UM USUÁRIO ADMIN PARA A
 #ADMINISTRAÇÃO DO SERVIDOR, NÃO RECOMENDO CRIAR UM USUÁRIO CHAMADO: admin POIS
@@ -235,16 +241,17 @@ users
 #USUÁRIO PARA INVADIR SERVIDORES. NESSE EXEMPLO SERÁ CRIADO APENAS PARA EFEITO
 #DE APRENDIZAGEM.
 
-#criando o usuário Admin
+#criando o usuário Admin local no Ubuntu Server
+#OBSERVAÇÃO: ALTERAR A SENHA DO USUÁRIO ADMIN CONFORME SUA NECESSIDADE
 sudo adduser admin
-	New password: pti@2018
-	Retype new password: pti@2018
-		Full Name []: Admin Bora para Prática
-		Room Number []: <Enter>
-		Work Phone []: <Enter>
-		Home Phone []: <Enter>
-		Other []: <Enter>
-	Is the information correct? [Y/n] y <Enter>
+  New password: pti@2018
+  Retype new password: pti@2018
+    Full Name []: Admin Bora para Prática
+    Room Number []: <Enter>
+    Work Phone []: <Enter>
+    Home Phone []: <Enter>
+    Other []: <Enter>
+  Is the information correct? [Y/n] y <Enter>
 
 #listando o usuário criado no arquivo passwd
 #opção do comando cat: -n (number line)
@@ -264,7 +271,6 @@ sudo getent group admin
 ```
 
 #09_ Adicionando o usuário Admin no grupo SUDO (Super User Do)<br>
-
 ```bash
 #adicionando o usuário Admin ao grupo do SUDO
 #opção do comando usermod: -a (append), -G (groups)
@@ -275,28 +281,28 @@ sudo groups admin
 
 #verificando as identificações de grupos do usuário Admin
 sudo id admin
+
+#verificando informações do grupo SUDO
+sudo getent group sudo
 ```
 
 #10_ Se logando no Terminal (Bash/Shell) do Ubuntu Server<br>
-
-	#OBSERVAÇÃO IMPORTANTE: fazer o teste de Login no Terminal do Ubuntu Server na Máquina
-	#Virtual para verificar se está tudo OK na criação do usuário admin.
-
+```bash
+#OBSERVAÇÃO IMPORTANTE: fazer o teste de Login no Terminal do Ubuntu Server na Máquina
+#Virtual para verificar se está tudo OK na autenticação do usuário admin.
+```
 ========================================DESAFIOS=========================================
 
-**#11_ DESAFIO-01:** PERMITIR QUE O USUÁRIO: __`admin`__ SE CONECTE REMOTAMENTE NO SERVIDOR UBUNTU SERVER VIA SSH UTILIZANDO O POWERSHELL, PUTTY OU TERMINAL NO LINUX.
+**#11_ DESAFIO-01:** PERMITIR QUE O USUÁRIO: __`admin`__ SE CONECTE REMOTAMENTE NO SERVIDOR UBUNTU SERVER VIA SSH UTILIZANDO O POWERSHELL, PUTTY, GIT BASH OU TERMINAL NO LINUX.
 
-**#12_ DESAFIO-02:** CRIAR UM USUÁRIO COM O SEU NOME, EXEMPLO: __`robson`__ (TUDO EM MINÚSCULO), FAZER O MESMO PROCEDIMENTO PARA ADICIONAR O SEU USUÁRIO AO GRUPO: __`sudo`__ E PERMITIR QUE O SEU USUÁRIO ACESSE O SERVIDOR UBUNTU SERVER VIA SSH.
+**#12_ DESAFIO-02:** CRIAR UM USUÁRIO COM O SEU NOME, EXEMPLO: __`robson`__ (TUDO EM MINÚSCULO), FAZER O MESMO PROCEDIMENTO PARA ADICIONAR O SEU USUÁRIO AO GRUPO: __`sudo`__ E PERMITIR QUE O SEU USUÁRIO ACESSE O SERVIDOR UBUNTU SERVER REMOTAMENTE VIA SSH (TESTAR AS CONEXÕES NO POWERSHELL, PUTTY, GIT BASH OU TERMINAL NO LINUX).
 
 =========================================================================================
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO OPENSSH SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do OpenSSH realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/01-openssh.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioopenssh #desafiossh
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafioopenssh #desafiossh

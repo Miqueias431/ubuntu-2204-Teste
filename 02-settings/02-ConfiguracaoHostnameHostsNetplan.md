@@ -7,44 +7,33 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 18/04/2023<br>
-#Data de atualização: 29/05/2024<br>
-#Versão: 0.05<br>
+#Data de atualização: 12/08/2024<br>
+#Versão: 0.09<br>
 
 Release Notes Ubuntu Server 22.04.x: https://discourse.ubuntu.com/t/jammy-jellyfish-release-notes/24668<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases
 
-Netplan é um utilitário para configurar facilmente a rede em um sistema Linux. Você<br>
-simplesmente cria uma descrição YAML das interfaces de rede necessárias e o que cada<br> 
-uma deve ser configurada para fazer. A partir desta descrição o Netplan irá gerar toda<br> 
-a configuração necessária para a ferramenta de renderização escolhida.
+Netplan é um utilitário para configurar facilmente a rede em um sistema Linux. Você simplesmente cria uma descrição YAML das interfaces de rede necessárias e o que cada uma deve ser configurada para fazer. A partir desta descrição o Netplan irá gerar toda a configuração necessária para a ferramenta de renderização escolhida.
 
-Hostname: é usado para exibir o nome DNS do sistema e para exibir ou defina seu nome<br> 
-de host ou nome de domínio NIS. O arquivo /etc/hostname armazena as informações de<br> 
-nome de máquina e domínio no formato FQDN (Fully Qualified Domain Name)
+Hostname: é usado para exibir o nome DNS do sistema e para exibir ou defina seu nome de host ou nome de domínio NIS. O arquivo /etc/hostname armazena as informações de nome de máquina e domínio no formato FQDN (Fully Qualified Domain Name)
 
-FQDN, algumas vezes denominado nome de domínio absoluto, é um nome de domínio que<br> 
-especifica sua localização exata na árvore hierárquica do Domain Name System. Ele<br> 
-especifica todos os níveis de domínio, incluindo, pelo menos, um domínio de segundo<br> 
-nível e um domínio de nível superior.
+FQDN, algumas vezes denominado nome de domínio absoluto, é um nome de domínio que especifica sua localização exata na árvore hierárquica do Domain Name System. Ele especifica todos os níveis de domínio, incluindo, pelo menos, um domínio de segundo nível e um domínio de nível superior.
 
-Hosts: pesquisa de tabela estática para nomes de host, é utilizado quando não temos<br> 
-servidores DNS (Domain Name System) e fazermos o apontamento diretamente no arquivo<br> 
-localizado em /etc/hosts
+Hosts: pesquisa de tabela estática para nomes de host, é utilizado quando não temos servidores DNS (Domain Name System) e fazermos o apontamento diretamente no arquivo localizado em /etc/hosts
 
 [![Endereço IPv4 Ubuntu Server](http://img.youtube.com/vi/sKn5fTy1OHI/0.jpg)](https://www.youtube.com/watch?v=sKn5fTy1OHI "Endereço IPv4 Ubuntu Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=sKn5fTy1OHI
 
 #01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server<br>
-
 ```bash
 #editando o arquivo de configuração do Hostname
 sudo vim /etc/hostname
 INSERT
 	
-	#adicionar o nome de domínio na linha 1
+	#alterar o nome de domínio FQDN na linha 1
 	#OBSERVAÇÃO IMPORTANTE: ALTERAR O NOME DO DOMÍNIO PARA O SEU CENÁRIO
 	wsvaamonde.pti.intra
 
@@ -53,15 +42,14 @@ ESC SHIFT : x <Enter>
 ```
 
 #02_ Alterando as entradas no arquivo Hosts do Ubuntu Server<br>
-
 ```bash
 #editando o arquivo de configuração do Hosts
 sudo vim /etc/hosts
 INSERT
 	
-	#adicionar o nome de domínio e apelido na linha 2 e 3
+	#adicionar o nome de domínio e apelido nas linhas 2 e 3
 	#OBSERVAÇÃO IMPORTANTE: ALTERAR O NOME DO DOMÍNIO E APELIDO PARA O SEU CENÁRIO
-	127.0.0.1    localhost.localdomain  localhost
+	127.0.0.1    localhost.pti.intra    localhost
 	127.0.1.1    wsvaamonde.pti.intra   wsvaamonde
 	172.16.1.20  wsvaamonde.pti.intra   wsvaamonde
 
@@ -70,7 +58,6 @@ ESC SHIFT : x <Enter>
 ```
 
 #03_ Instalando os principais software de rede no Ubuntu Server<br>
-
 ```bash
 #atualizando as lista do sources.list e instalando os pacotes e ferramentas de rede
 sudo apt update
@@ -78,7 +65,6 @@ sudo apt install bridge-utils ifenslave net-tools
 ```
 
 #04_ Verificando informações do Hardware de Rede no Ubuntu Server<br>
-
 ```bash
 #verificando os dispositivos PCI de Placa de Rede instalados
 #opções do comando lspci: -v (verbose), -s (show)
@@ -91,7 +77,6 @@ sudo lshw -class network
 ```
 
 #05_ Verificando as informações de Endereços IPv4 no Ubuntu Server<br>
-
 ```bash
 #verificando as configurações de endereçamento IP da Placa de Rede instalada
 #opção do comando ifconfig: -a (all)
@@ -108,7 +93,6 @@ sudo resolvectl
 ```
 
 #06_ Alterando as configurações da Placa de Rede do Ubuntu Server<br>
-
 ```bash
 #OBSERVAÇÃO: o nome do arquivo pode mudar dependendo da versão do Ubuntu Server.
 #/etc/netplan/00-installer-config.yaml #Padrão do Ubuntu Server 22.04.x LTS
@@ -130,52 +114,50 @@ sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-confi
 sudo vim /etc/netplan/00-installer-config.yaml
 INSERT
 ```
-
 ```yaml
 #bloco de configuração da rede
 network:
   #bloco de configuração do protocolo Ethernet
   ethernets:
-    #configuração da Interface Física (Nome Lógico)
+    #configuração da Interface Física (Nome Lógico comando lshw)
     enp0s3:
-    #desabilitando o suporte ao DHCP Client
-    dhcp4: false
-    #desativando o suporte ao IPv6
-    #OBSERVAÇÃO IMPORTANTE: utilizar essa opção somente se você não está usando
-    #na sua rede o recurso do IPv6
-    link-local: []
-    #alterar o endereço IPv4 para o seu cenário
-    #OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 dentro de Colchetes
-    addresses: [172.16.1.20/24]
-    #alterar o gateway padrão para o seu cenário
-    #gateway4: 172.16.1.254
-    #OBSERVAÇÃO IMPORTANTE: a opção de Gateway4 foi descontinuada, recomendo
-    #utilizar as opções de Routes do Netplan para configurar o Gateway padrão
-    routes:
-      #configuração da rota padrão (cuidado com o traço antes do to)
-      - to: default
-        #configuração do endereço IPv4 do Gateway
-        via: 172.16.1.254
-    #configuração dos servidores de DNS Preferencial e Alternativo
-    nameservers:
-      #alterar os servidores DNS para o seu cenário
-      #OBSERVAÇÃO: configuração do Endereço IPv4 dentro de Colchetes e separados
-      #por vírgula
-      addresses: [8.8.8.8, 8.8.4.4]
-      #alterar a pesquisa de domínio para o seu cenário
-      #OBSERVAÇÃO: configuração da pesquisa de Domínio dentro de Colchetes
-      search: [pti.intra]
+      #desabilitando o suporte ao DHCP Client
+      dhcp4: false
+      #desativando o suporte ao IPv6
+      #OBSERVAÇÃO IMPORTANTE: utilizar essa opção somente se você não está usando
+      #na sua rede o recurso do IPv6
+      link-local: []
+      #alterar o endereço IPv4 para o seu cenário
+      #OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 dentro de Colchetes
+      addresses: [172.16.1.20/24]
+      #alterar o gateway padrão para o seu cenário
+      #OBSERVAÇÃO IMPORTANTE: a opção de Gateway4 foi descontinuada, recomendo
+      #utilizar as opções de Routes do Netplan para configurar o Gateway padrão
+      #gateway4: 172.16.1.254
+      routes:
+        #configuração da rota padrão (cuidado com o traço antes do to)
+        - to: default
+          #configuração do endereço IPv4 do Gateway
+          via: 172.16.1.254
+      #configuração dos servidores de DNS Preferencial e Alternativo
+      nameservers:
+        #alterar os servidores DNS para o seu cenário
+        #OBSERVAÇÃO: configuração do Endereço IPv4 dentro de Colchetes e separados
+        #por vírgula, recomendo pelo menos dois DNS Server serem configurados ou 
+        #somente o endereço do Servidor de DNS Local d Rede.
+        addresses: [8.8.8.8, 8.8.4.4]
+        #alterar a pesquisa de domínio para o seu cenário
+        #OBSERVAÇÃO: configuração da pesquisa de Domínio dentro de Colchetes
+        search: [pti.intra]
   #fim do bloco de configuração do protocolo Ethernet versão 2
   version: 2
 ```
-
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT : x <Enter>
 ```
 
 #07_ Aplicando as configurações do Netplan e verificando as informações de Rede do Ubuntu Server<br>
-
 ```bash
 #aplicando as mudanças do Netplan em modo Debug (detalhado)
 sudo netplan --debug apply
@@ -209,7 +191,6 @@ sudo hostname -i
 ```
 
 #08_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH<br>
-
 ```bash
 #OBSERVAÇÃO: após a configuração da Placa de Rede do Ubuntu Server você já pode
 #acessar remotamente o seu servidor utilizando o Protocolo SSH nos clientes Linux

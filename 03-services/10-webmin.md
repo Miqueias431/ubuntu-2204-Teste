@@ -7,19 +7,16 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 20/04/2023<br>
-#Data de atualização: 30/04/2023<br>
-#Versão: 0.10<br>
+#Data de atualização: 23/08/2024<br>
+#Versão: 0.12<br>
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WEBMIN SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do Webmin realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WEBMIN SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do Webmin realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/10-webmin.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowebmin #desafiocockpit
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowebmin #desafiocockpit
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Instalando a Dependências do Webmin<br>
@@ -35,16 +32,13 @@ Conteúdo estudado nesse desafio:<br>
 
 Site Oficial do Webmin: https://webmin.com/<br>
 
-O Webmin é um painel de controle de gerenciamento de servidor baseado na web para sistemas<br>
-operacionais do tipo Unix ou Linux, facilitando a administração e gestão dos servidores via<br>
-navegador, não precisando de conhecimentos avanças em Bash/Shell.
+O Webmin é um painel de controle de gerenciamento de servidor baseado na web para sistemas operacionais do tipo Unix ou Linux, facilitando a administração e gestão dos servidores via navegador, não precisando de conhecimentos avanças em Bash/Shell.
 
 [![Webmin](http://img.youtube.com/vi/QEpOrGZbEl8/0.jpg)](https://www.youtube.com/watch?v=QEpOrGZbEl8 "Webmin")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=QEpOrGZbEl8
 
 #01_ Instalando as Dependências do Webmin<br>
-
 ```bash
 #atualizando as lista do apt
 sudo apt update
@@ -57,7 +51,6 @@ software-properties-common libdbd-mysql-perl
 ```
 
 #02_ Adicionando o Repositório do Webmin no Ubuntu Server<br>
-
 ```bash
 #opção do comando curl: -o (output file)
 curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
@@ -68,7 +61,6 @@ sudo sh setup-repos.sh
 ```
 
 #03_ Instalando o Webmin<br>
-
 ```bash
 #atualizando as lista do apt com o novo repositório do Webmin
 sudo apt update
@@ -79,7 +71,6 @@ sudo apt install --install-recommends webmin
 ```
 
 #04_ Habilitando o Serviço do Webmin<br>
-
 ```bash
 #habilitando o serviço do Webmin
 sudo systemctl daemon-reload
@@ -88,7 +79,6 @@ sudo systemctl start webmin
 ```
 
 #05_ Verificando o Serviço e Versão do Webmin<br>
-
 ```bash
 #verificando o serviço do Webmin
 sudo systemctl status webmin
@@ -108,7 +98,6 @@ sudo apt list --installed | grep -i webmin
 ```
 
 #06_ Verificando a Porta de Conexão do Webmin<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
 #iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
@@ -120,46 +109,48 @@ sudo lsof -nP -iTCP:'10000' -sTCP:LISTEN
 ```
 
 #07_ Localização dos diretórios principais do Webmin<br>
-
 ```bash
-/etc/webmin/*  <-- Diretório dos arquivos de Configuração do serviço do Webmin
-/var/webmin/*  <-- Diretório dos arquivos de Log's do serviço do Webmin
+/etc/webmin/*   <-- Diretório dos arquivos de Configuração do serviço do Webmin
+/var/webmin/*   <-- Diretório dos arquivos de Log's do serviço do Webmin
 ```
 
 #08_ Testando o Webmin no navegador<br>
+```bash
+#acessar via navegador o Webmin
+firefox ou google chrome: https://endereço_ipv4_ubuntuserver:10000
 
-	firefox ou google chrome: https://endereço_ipv4_ubuntuserver:10000
-
-	Username: vaamonde
-	Password: pti@2018 
-	<Sign In>
+Username: vaamonde
+Password: pti@2018 
+<Sign In>
+```
 
 #09_ Configurações Básicas do Webmin<br>
+```bash
+#Atualizando o Módulos de Serviços do Web
+Webmin
+  Refresh Modules
 
-	#Atualizando o Módulos de Serviços do Web
-	Webmin
-		Refresh Modules
+#Alterando a Linguagem do Webmin
+Webmin
+  Webmin Configuration
+    Language and Locale
+      Language: português (Brasil)
+      Locale: português (Brasil)
+    <Change Language>
 
-	#Alterando a Linguagem do Webmin
-	Webmin
-		Webmin Configuration
-			Language and Locale
-				Language: português (Brasil)
-				Locale: português (Brasil)
-			<Change Language>
-	
-	#Alterando o Tema para Night/Black do Webmin
-	Webmin
-		Ícone: Day/night mode toggle (atalho: Alt + L)
+#Alterando o Tema para Night/Black do Webmin
+Webmin
+  Ícone: Day/night mode toggle (atalho: Alt + L)
 
-	#Conectando no Banco de Dados MySQL Server
-	Webmin
-		Servidores
-			Servidor de base de dados MySQL
-				Usuário: root
-				Senha: pti@2018
-				<Salvar>
-		
+#Conectando no Banco de Dados MySQL Server
+Webmin
+  Servidores
+    Servidor de base de dados MySQL
+      Usuário: root
+      Senha: pti@2018
+    <Salvar>
+```
+
 ========================================DESAFIOS=========================================
 
 **#10_ DESAFIO-01:** FAZER A INSTALAÇÃO E CONFIGURAÇÃO DO SOFTWARE __`COCKPIT`__ NO UBUNTU SERVER, ANALISAR AS DIFERENÇAS ENTRE O WEBMIN E O COCKPIT OU SUGERIR UMA NOVA SOLUÇÃO DE ADMIN GUI (Graphical User Interface) WEB PARA A ADMINISTRAÇÃO DO UBUNTU SERVER, COMENTAR NA DESCRIÇÃO DESSE VÍDEO.
@@ -172,13 +163,10 @@ sudo lsof -nP -iTCP:'10000' -sTCP:LISTEN
 
 =========================================================================================
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WEBMIN SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do Webmin realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WEBMIN SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do Webmin realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/10-webmin.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowebmin #desafiocockpit
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowebmin #desafiocockpit

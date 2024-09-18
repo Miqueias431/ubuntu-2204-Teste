@@ -7,19 +7,16 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 07/03/2024<br>
-#Data de atualização: 04/06/2024<br>
-#Versão: 0.16<br>
+#Data de atualização: 12/08/2024<br>
+#Versão: 0.18<br>
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO ZABBIX SE VOCÊ CONSEGUIU IMPLEMENTAR COM 
-A SEGUINTE FRASE: Implementação do Zabbix realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO ZABBIX SE VOCÊ CONSEGUIU IMPLEMENTAR COM A SEGUINTE FRASE: Implementação do Zabbix realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DA IMPLEMENTAÇÃO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DA IMPLEMENTAÇÃO ABAIXO: 
+COMPARTILHAR O SELO DA IMPLEMENTAÇÃO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DA IMPLEMENTAÇÃO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/11-zabbix.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiozabbix
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiozabbix
 
 Conteúdo estudado nessa implementação:<br>
 #01_ Instalando as Dependências do Zabbix Server e Agent<br>
@@ -41,16 +38,13 @@ Conteúdo estudado nessa implementação:<br>
 
 Site Oficial do Zabbix: https://www.zabbix.com/<br>
 
-Traduzido do inglês-O Zabbix é uma ferramenta de software de código aberto para monitorar<br>
-a infraestrutura de TI, como redes, servidores, máquinas virtuais e serviços em nuvem. O <br>
-Zabbix coleta e exibe métricas básicas.
+Traduzido do inglês-O Zabbix é uma ferramenta de software de código aberto para monitorar a infraestrutura de TI, como redes, servidores, máquinas virtuais e serviços em nuvem. O Zabbix coleta e exibe métricas básicas.
 
 [![Zabbix Server](http://img.youtube.com/vi/ms5_qLThRTg/0.jpg)](https://www.youtube.com/watch?v=ms5_qLThRTg "Zabbix Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=ms5_qLThRTg
 
 #01_ Instalando as Dependências do Zabbix Server e Agent2<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: O ZABBIX POSSUI AS DEPENDÊNCIAS DO BANCO DE DADOS MYSQL SERVER
 #E DO APACHE2 SERVER, ESSES APLICATIVOS JÁ FORAM INSTALADO NAS ETAPAS: 02 DO APACHE2 
@@ -67,7 +61,6 @@ software-properties-common git vim fping
 ```
 
 #02_ Adicionando o Repositório do Zabbix no Ubuntu Server<br>
-
 ```bash
 #Link de referência do download: https://www.zabbix.com/download
 
@@ -81,8 +74,8 @@ software-properties-common git vim fping
 #FOI SELECIONADO: 7.0 LTS, Ubuntu, 22.04 (Jammy), Server, Frontend, Agent, MySQL
 #e Apache.
 
-#download do repositório do Zabbix Server LTS 7.0 (LINK ATUALIZADO EM: 04/06/2024)
-wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu22.04_all.deb
+#download do repositório do Zabbix Server LTS 7.0 (LINK ATUALIZADO EM: 02/08/2024)
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-2+ubuntu22.04_all.deb
 
 #instalação do repositório do Zabbix Server
 #opção do comando dpkg: -i (install)
@@ -90,7 +83,6 @@ sudo dpkg -i zabbix-release_7.0*.deb
 ```
 
 #03_ Instalando o Zabbix Server, Frontend e Agent2<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: para a instalação do Zabbix Server é necessário ter instalado e
 #configurado de forma correta o MySQL Server e o Apache2 Server, no caso do Banco de Dados
@@ -108,12 +100,10 @@ zabbix-sql-scripts zabbix-agent2 zabbix-agent2-plugin-*
 ```
 
 #04_ Criando a Base de Dados do Zabbix Server no MySQL Server<br>
-
 ```bash
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u root -p
 ```
-
 ```sql
 /* Criando o Banco de Dados Zabbix Server */
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
@@ -138,12 +128,10 @@ exit
 ```
 
 #05_ Testando o acesso a Base de Dados do Zabbix Server no MySQL Server<br>
-
 ```bash
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u zabbix -p
 ```
-
 ```sql
 /* Listando os Bancos de Dados do MySQL */
 SHOW DATABASES;
@@ -156,7 +144,6 @@ exit
 ```
 
 #06_ Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: O PROCEDIMENTO DE CRIAÇÃO E POPULAÇÃO DAS TABELAS DO ZABBIX
 #SERVER, DEPENDENDO DO SEU HARDWARE DEMORA BASTANTE, SÓ AGUARDAR O TÉRMINO.
@@ -170,7 +157,6 @@ sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | sudo mysql --defau
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u zabbix -p
 ```
-
 ```sql
 /* Listando os Bancos de Dados do MySQL */
 SHOW DATABASES;
@@ -187,14 +173,12 @@ SELECT username,passwd FROM users;
 /* Saindo do Banco de Dados */
 exit
 ```
-
 ```bash
 #Desabilitando a opção de Criação de Função no MySQL Server
 
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u root -p
 ```
-
 ```sql
 /* Desabilitando a opção de Criação de Função log_bin_trust_function_creators no MySQL Server */
 SET GLOBAL log_bin_trust_function_creators = 0;
@@ -204,7 +188,6 @@ exit
 ```
 
 #07_ Editando os arquivos de Configuração do Zabbix Server e Agent<br>
-
 ```bash
 #editando o arquivo de configuração do Zabbix Server
 sudo vim /etc/zabbix/zabbix_server.conf
@@ -246,7 +229,6 @@ ESC SHIFT : x <Enter>
 ```
 
 #08_ Habilitando o Serviço do Zabbix Server e Agent2<br>
-
 ```bash
 #habilitando o serviço do Zabbix Server e Agent2
 sudo systemctl daemon-reload
@@ -255,7 +237,6 @@ sudo systemctl restart zabbix-server zabbix-agent2 apache2
 ```
 
 #09_ Verificando o Serviço e Versão do Zabbix Server e Agent2<br>
-
 ```bash
 #verificando o serviço do Zabbix Server e Agent2
 sudo systemctl status zabbix-server zabbix-agent2
@@ -277,42 +258,43 @@ sudo zabbix_agent2 -V
 ```
 
 #10_ Configurando o Zabbix Server via Navegador<br>
+```bash
+#acessar via navegador o Zabbix
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver/zabbix
 
-	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/zabbix
+#Configuração inicial do Zabbix Server
+Welcome to Zabbix 7.0
+	Default language: English (en_US)
+		<Next step>
+	Check of pre-requisites
+		<Next step>
+	Configure DB connection
+		Database type: MySQL
+		Database host: localhost
+		Database port: 0 (use default port)
+		Database name: zabbix
+		Store credentials in: Plain text
+		User: zabbix
+		Password: zabbix
+		<Next step>
+	Settings
+		Zabbix server name: wsvaamonde
+		Default time zone: (UTC-03:00) America/Sao_Paulo
+		Default theme: Dark
+		<Next step>
+	Pre-installation summary
+		<Next step>
+	Install
+		<Finish>
 
-	#Configuração inicial do Zabbix Server
-	Welcome to Zabbix 7.0
-		Default language: English (en_US)
-			<Next step>
-		Check of pre-requisites
-			<Next step>
-		Configure DB connection
-			Database type: MySQL
-			Database host: localhost
-			Database port: 0 (use default port)
-			Database name: zabbix
-			Store credentials in: Plain text
-			User: zabbix
-			Password: zabbix
-			<Next step>
-		Settings
-			Zabbix server name: wsvaamonde
-			Default time zone: (UTC-03:00) America/Sao_Paulo
-			Default theme: Dark
-			<Next step>
-		Pre-installation summary
-			<Next step>
-		Install
-			<Finish>
-
-	#Acessando o Painel de Gerenciamento do Zabbix Server
-	Username: Admin
-	Password: zabbix
-	Yes: Remember me for 30 days
-	<Sign in>
+#Acessando o Painel de Gerenciamento do Zabbix Server
+Username: Admin
+Password: zabbix
+Yes: Remember me for 30 days
+<Sign in>
+```
 
 #11_ Verificando a Porta de Conexão do Zabbix Server e Agent<br>
-
 ```bash
 #OBSERVAÇÃO IMPORTANTE: no Ubuntu Server as Regras de Firewall utilizando o comando: 
 #iptables ou: ufw está desabilitado por padrão (INACTIVE), caso você tenha habilitado 
@@ -324,7 +306,6 @@ sudo lsof -nP -iTCP:'10050,10051' -sTCP:LISTEN
 ```
 
 #12_ Adicionado o Usuário Local no Grupo Padrão do Zabbix Server<br>
-
 ```bash
 #opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
 sudo usermod -a -G zabbix $USER
@@ -337,7 +318,6 @@ exit
 ```
 
 #13_ Localização dos diretórios principais do Zabbix Server e Agent<br>
-
 ```bash
 /etc/zabbix/*                   <-- Diretório dos arquivos de Configuração do serviço do Zabbix
 /etc/zabbix/zabbix_server.conf  <-- Arquivo de Configuração do Zabbix Server
@@ -347,54 +327,53 @@ exit
 ```
 
 #14_ Instalando os Agentes do Zabbix no Linux Mint e no Windows 10<br>
+```bash
+#Link de referência do download: https://www.zabbix.com/br/download_agents
 
-	#Link de referência do download: https://www.zabbix.com/br/download_agents
+#OBSERVAÇÃO IMPORTANTE: ATÉ O MOMENTO DA GRAVAÇÃO DESSE VÍDEO, O AGENTE PARA O
+#SISTEMA MICROSOFT NÃO DISPONIBILIZA A VERSÃO 7.0, SOMENTE A VERSÃO 6.4.x DO 
+#ZABBIX AGENT.
 
-	#OBSERVAÇÃO IMPORTANTE: ATÉ O MOMENTO DA GRAVAÇÃO DESSE VÍDEO, O AGENTE PARA O
-	#SISTEMA MICROSOFT NÃO DISPONIBILIZA A VERSÃO 7.0, SOMENTE A VERSÃO 6.4.x DO 
-	#ZABBIX AGENT.
+#OBSERVAÇÃO IMPORTANTE: NO DIA 03/06/2024 FOI LANÇADO A VERSÃO 7.0 OFICIAL DO
+#AGENT PARA MICROSOFT WINDOWS.
 
-	#OBSERVAÇÃO IMPORTANTE: NO DIA 03/06/2024 FOI LANÇADO A VERSÃO 7.0 OFICIAL DO
-	#AGENT PARA MICROSOFT WINDOWS.
+Windows, Any, amd64, v6.4, OpenSSL, MSI: 7.0.0 (ATUALIZADO NO DIA 02/08/2024)
+https://cdn.zabbix.com/zabbix/binaries/stable/7.0/7.0.2/zabbix_agent2-7.0.2-windows-amd64-openssl.msi
 
-	Windows, Any, amd64, v6.4, OpenSSL, MSI: 7.0.0 (ATUALIZADO NO DIA 04/06/2024)
-	https://cdn.zabbix.com/zabbix/binaries/stable/7.0/7.0.0/zabbix_agent2-7.0.0-windows-amd64-openssl.msi
+#Instalação Manual do Zabbix Agent 2 para Microsoft
+Pasta de Download
+	Welcome to the Zabbix Agent 2 (64-bit) Setup Wizard <Next>
+	End-User License Agreement
+		(On) I accept the therms in the License Agreement <Next>
+	Custom Setup
+		(On) Zabbix Agent 2 (64-bit) <Next>
+	Zabbix Agent service configuration
+		Host name: windows10
+		Zabbix server IP/DNS: 172.16.1.20
+		Agent listen port: 10050
+		Server or Proxy for active checks: 172.16.1.20
+		(Off) Enable PSK
+		(On) Add agent location to the PATH <Next>
+	Ready to install Zabbix Agent 2 (64-bit) <Install>
+		Zabbix Agent 2 MSI package (64)-bit <Sim>
+	Completed the Zabbix Agent 2 (64-bit) <Finish>
 
-	#Instalação Manual do Zabbix Agent 2 para Microsoft
-	Pasta de Download
-		Welcome to the Zabbix Agent 2 (64-bit) Setup Wizard <Next>
-		End-User License Agreement
-			(On) I accept the therms in the License Agreement <Next>
-		Custom Setup
-			(On) Zabbix Agent 2 (64-bit) <Next>
-		Zabbix Agent service configuration
-			Host name: windows10
-			Zabbix server IP/DNS: 172.16.1.20
-			Agent listen port: 10050
-			Server or Proxy for active checks: 172.16.1.20
-			(Off) Enable PSK
-			(On) Add agent location to the PATH <Next>
-		Ready to install Zabbix Agent 2 (64-bit) <Install>
-			Zabbix Agent 2 MSI package (64)-bit <Sim>
-		Completed the Zabbix Agent 2 (64-bit) <Finish>
-	
-	#Verificação da instalação do Zabbix Agent 2 no Powershell
-	#opção do comando netstat: -a (All connections), -n (addresses and port numbers)
-	Powershell
-		hostname
-		Get-Service 'Zabbix Agent 2'
-		netstat -an | findstr 10050
-	
-	#Localização do arquivo de configuração do Zabbix Agent 2
-	C:\Program Files\Zabbix Agent 2\
-		zabbix_agent2.conf
+#Verificação da instalação do Zabbix Agent 2 no Powershell
+#opção do comando netstat: -a (All connections), -n (addresses and port numbers)
+Powershell
+  hostname
+  Get-Service 'Zabbix Agent 2'
+  netstat -an | findstr 10050
 
-	#Link de referência do download: https://www.zabbix.com/br/download
+#Localização do arquivo de configuração do Zabbix Agent 2
+C:\Program Files\Zabbix Agent 2\
+  zabbix_agent2.conf
 
-```bash	
+#Link de referência do download: https://www.zabbix.com/br/download
+
 #SELECIONAR: 7.0 LTS, Ubuntu, 22.04 (Jammy), Agent 2
-#download do repositório do Zabbix Server LTS 7.0 (LINK ATUALIZADO EM: 04/06/2024)
-wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu22.04_all.deb
+#download do repositório do Zabbix Server LTS 7.0 (LINK ATUALIZADO EM: 02/08/2024)
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-2+ubuntu22.04_all.deb
 
 #instalação do repositório do Zabbix Server
 #opção do comando dpkg: -i (install)
@@ -443,54 +422,54 @@ sudo lsof -nP -iTCP:'10050' -sTCP:LISTEN
 ```
 
 #15_ Criando os Hosts de Monitoramento dos Agentes no Zabbix Server<br>
+```bash
+#Criação dos Host GNU/Linux e Microsoft Windows no Zabbix Server
+Data collection
+	Hosts
+		<Create host>
+			Host
+				Host name: linuxmint213
+				Visible name: linuxmint213
+				Templates: <Select>
+					Template group: <Select>
+						Templates/Operating systems
+						Linux by Zabbix agent <Select>
+				Host groups: <select>
+					Discovered hosts <Select>
+				Interfaces: Add:
+					Agent: 
+						DNS name: 172.16.1.110
+						Connect to: IP
+						Port: 10050
+				Description: Desktop Linux Mint 21.3
+				Monitored by proxy: (no proxy)
+				Enable: On
+			<Add>
 
-	#Criação dos Host GNU/Linux e Microsoft Windows no Zabbix Server
-	Data collection
-		Hosts
-			<Create host>
-				Host
-					Host name: linuxmint213
-					Visible name: linuxmint213
-					Templates: <Select>
-						Template group: <Select>
-							Templates/Operating systems
-							Linux by Zabbix agent <Select>
-					Host groups: <select>
-						Discovered hosts <Select>
-					Interfaces: Add:
-						Agent: 
-							DNS name: 172.16.1.110
-							Connect to: IP
-							Port: 10050
-					Description: Desktop Linux Mint 21.3
-					Monitored by proxy: (no proxy)
-					Enable: On
-				<Add>
-	
-	Data collection
-		Hosts
-			<Create host>
-				Host
-					Host name: windows10
-					Visible name: windows10
-					Templates: <Select>
-						Template group: <Select>
-							Templates/Operating systems
-							Windows by Zabbix agent <Select>
-					Host groups: <select>
-						Discovered hosts <Select>
-					Interfaces: Add:
-						Agent: 
-							DNS name: 172.16.1.193
-							Connect to: IP
-							Port: 10050
-					Description: Desktop Microsoft Windows 10
-					Monitored by proxy: (no proxy)
-					Enable: On
-				<Add>
+Data collection
+	Hosts
+		<Create host>
+			Host
+				Host name: windows10
+				Visible name: windows10
+				Templates: <Select>
+					Template group: <Select>
+						Templates/Operating systems
+						Windows by Zabbix agent <Select>
+				Host groups: <select>
+					Discovered hosts <Select>
+				Interfaces: Add:
+					Agent: 
+						DNS name: 172.16.1.193
+						Connect to: IP
+						Port: 10050
+				Description: Desktop Microsoft Windows 10
+				Monitored by proxy: (no proxy)
+				Enable: On
+			<Add>
+```
 
 #16_ Estressando o Servidor Ubuntu Server para verificar as mudanças no Gráfico<br>
-
 ```bash
 #instalando o software stress-ng e s-tui no Ubuntu Server (NÃO COMENTADO NO VÍDEO)
 sudo apt install stress-ng s-tui
@@ -524,13 +503,10 @@ sudo find / -name vaamonde*
 
 =========================================================================================
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO ZABBIX SE VOCÊ CONSEGUIU IMPLEMENTAR COM 
-A SEGUINTE FRASE: Implementação do Zabbix realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO ZABBIX SE VOCÊ CONSEGUIU IMPLEMENTAR COM A SEGUINTE FRASE: Implementação do Zabbix realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DA IMPLEMENTAÇÃO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DA IMPLEMENTAÇÃO ABAIXO: 
+COMPARTILHAR O SELO DA IMPLEMENTAÇÃO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E CONTEÚDO DA IMPLEMENTAÇÃO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/11-zabbix.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiozabbix 
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiozabbix 

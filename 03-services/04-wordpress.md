@@ -7,19 +7,16 @@
 #Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 #Data de criação: 16/01/2023<br>
-#Data de atualização: 05/05/2024<br>
-#Versão: 0.17<br>
+#Data de atualização: 12/08/2024<br>
+#Versão: 0.19<br>
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WORDPRESS SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do WordPress realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WORDPRESS SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do WordPress realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/04-wordpress.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowordpress #desafiocms
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowordpress #desafiocms
 
 Conteúdo estudado nesse desafio:<br>
 #01_ Instalado as Dependências do WordPress;<br>
@@ -42,16 +39,13 @@ Site Oficial do W3C School CSS: https://www.w3schools.com/css/default.asp<br>
 Site Oficial do W3C School JavaScript: https://www.w3schools.com/js/default.asp<br>
 Site Oficial do W3C School PHP: https://www.w3schools.com/php/default.asp
 
-WordPress é um sistema livre e aberto de gestão de conteúdo para internet, baseado em PHP<br>
-com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente<br>
-para a criação de páginas eletrônicas e blogs online.
+WordPress é um sistema livre e aberto de gestão de conteúdo para internet, baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de páginas eletrônicas e blogs online.
 
 [![WordPress](http://img.youtube.com/vi/J6xVAocGyZg/0.jpg)](https://www.youtube.com/watch?v=J6xVAocGyZg "WordPress")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=J6xVAocGyZg
 
 #01_ Instalando as Dependências do WordPress<br>
-
 ```bash
 #atualizando as listas do Apt
 sudo apt update
@@ -64,20 +58,24 @@ pwgen libmcrypt-dev ghostscript libapache2-mod-php zlib1g zlib1g-dev
 ```
 
 #02_ Criando a Base de Dados do WordPress no MySQL Server<br>
-
 ```bash
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u root -p
 ```
-
 ```sql
-/* Criando o Banco de Dados Wordpress */
+/* Criando o Banco de Dados com o nome Wordpress */
+/* OBSERVAÇÃO IMPORTANTE: ALTERAR O NOME DA BASE DE DADOS CONFORME NECESSIDADE */
 CREATE DATABASE wordpress;
 
-/* Criando o usuário da Base de Dados do WordPress */
+/* Criando o usuário e senha da Base de Dados do WordPress */
+/* OBSERVAÇÃO IMPORTANTE: ALTERAR O NOME DO USUÁRIO E SENHA CONFORME NECESSIDADE */
+/* NESSE CENÁRIO ESTÁ SENDO CRIADO UM USUÁRIO REMOTO, QUANDO NÃO SE ADICIONA A OPÇÃO
+LOCALHOST OU % (PORCENTAGEM) NA CRIAÇÃO DE USUÁRIOS NO MYSQL, ELE ENTENDE QUE O 
+USUÁRIO SERÁ REMOTO, ADICIONANDO AUTOMATICAMENTE O CARÁCTER DE % NA CRIAÇÃO */
 CREATE USER 'wordpress' IDENTIFIED WITH mysql_native_password BY 'wordpress';
 
 /* Aplicando as permissões de acesso do usuário WordPress */
+/* OBSERVAÇÃO IMPORTANTE: ALTERAR O NOME DO USUÁRIO CONFORME NECESSIDADE */
 GRANT USAGE ON *.* TO 'wordpress';
 GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress';
 FLUSH PRIVILEGES;
@@ -94,13 +92,11 @@ USE wordpress;
 /* Saindo do Banco de Dados */
 exit
 ```
-
 ```bash
 #se logando com o usuário wordpress para testar a conexão com o MySQL Server
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u wordpress -p
 ```
-
 ```sql
 /* visualizando a base de dados do WordPress */
 SHOW DATABASES;
@@ -109,7 +105,6 @@ exit
 ```
 
 #03_ Fazendo o download do WordPress e descompactando o seu conteúdo no diretório padrão do Apache2 Server<br>
-
 ```bash
 #acessando diretório temporário do Ubuntu Server
 cd /tmp
@@ -121,10 +116,12 @@ wget -O wordpress.zip https://br.wordpress.org/latest-pt_BR.zip
 #descompactando o arquivo do WordPress
 unzip wordpress.zip
 
+#OBSERVAÇÃO IMPORTANTE: ALTERAR O CAMINHO DO DESTINO CONFORME NECESSIDADE
 #movendo o conteúdo do WordPress para o diretório do Apache2 Server
 #opção do comando mv: -v (verbose)
 sudo mv -v wordpress/ /var/www/html/wp/
 
+#OBSERVAÇÃO IMPORTANTE: ALTERAR O CAMINHO DA ALTERAÇÃO DAS PERMISSÕES CONFORME NECESSIDADE
 #alterando as permissões dos diretórios e arquivos do WordPress
 #opção do comando chown: -R (recursive), -f (silent), -v (verbose), www-data (user), www-data (group)
 #opção do comando find: . (path), -type d (directory), type f (file), -exec (execute command)
@@ -137,7 +134,6 @@ sudo find /var/www/html/wp/. -type f -exec chmod -v 2664 {} \;
 ```
 
 #04_ Editando o arquivo de conexão com o Banco de Dados e Salt do WordPress<br>
-
 ```bash
 #acessando o diretório do WordPress
 cd /var/www/html/wp/
@@ -150,7 +146,6 @@ sudo cp -v wp-config-sample.php wp-config.php
 sudo vim wp-config.php
 INSERT
 ```
-
 ```php
 #alterar os valores das variáveis "define" a partir da linha: 23
 
@@ -165,21 +160,21 @@ define( 'DB_PASSWORD', 'wordpress' );
 
 #configuração do Salt do WordPress site: https://api.wordpress.org/secret-key/1.1/salt/
 #mais informações sobre o Salt's do WordPress: https://www.hostinger.com.br/tutoriais/wordpress-salt
-#copiar o conteúdo do Salt e colocar a partir da linha: 53
-#OBSERVAÇÃO IMPORTANTE: remover as linhas existentes de: 53 até: 60 antes de copiar/colar as
+#copiar o conteúdo do Salt e colocar a partir da linha: 51
+#OBSERVAÇÃO IMPORTANTE: remover as linhas existentes de: 51 até: 58 antes de copiar/colar as
 #novas linhas do Salt, utilizar a opção: dd do Editor de Texto VIM. 
 ```
-
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 ```
 
 #05_ Habilitando os módulos do Apache2 Server utilizados pelo WordPress<br>
-
 ```bash
 #habilitando os módulos do Apache2 Server
-sudo a2enmod cgi alias authz_host deflate dir expires headers mime rewrite autoindex negotiation setenvif
+#opção da contra barra (\): criar uma quebra de linha no terminal
+sudo a2enmod cgi alias authz_host deflate dir expires headers mime rewrite \
+autoindex negotiation setenvif
 
 #reiniciar o serviço do Apache2 Server
 sudo systemctl reload apache2
@@ -191,58 +186,57 @@ sudo journalctl -xeu apache2
 ```
 
 #06_ Acessando e configurando o WordPress via navegador<br>
-
-	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp
-
-	#Informações que serão solicitadas na configuração via Web do WordPress
-	Português do Brasil: Continuar;
-	Informação necessária
-		Título do site: Seu Nome e Sobrenome;
-		Nome de usuário: admin;
-		Senha: pti@2018;
-		Confirme a senha: On (Habilitado) Confirmar o uso de uma senha fraca;
-		O seu e-mail: admin@ptin.intra; 
-	<Instalar WordPress>
-	<Acessar>
-
-	#Tela de login do WordPress
-	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/wp-login.php
-		Nome de usuário ou endereço de email: admin
-		Senha: pti@2018
-		Lembrar-me: On (Habilitado)
-		<Acessar>
-	
-	#OBSERVAÇÃO IMPORTANTE: como não estamos utilizando servidores DNS e nem Domínio/Subdomínio
-	#é recomendado alterar as configurações de Links Permanente do Wordpress, com isso resolvemos
-	#uma falha de JSON na hora de salvar as mudanças dos Posts no Wordpress.
-	
-	#Configuração dos Links Permanentes do WordPress
-	Configurações
-		Links permanentes
-			Configurações de Links Permanentes
-				Configurações Comuns
-					Estrutura de Links Permanentes
-						ON (Selecionar): Padrão (http://172.16.1.20/wp/?=123)
-		<Salvar Alterações>
-
-	#Tela do site do WordPress
-	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/
-
-	#OBSERVAÇÃO IMPORTANTE: Quando você faz a implementação do Wordpress em uma rede Local ou Cloud,
-	#e precisa fazer a migração do Site para outra Rede com configurações diferentes, o Wordpress não
-	#atualiza automaticamente os endereços IPv4 ou nome de Domínio que estão registrados na tabela de
-	#configuração do Wordpress no MySQL Server, sendo necessário fazer essa atualização manualmente
-	#conforme Script SQL abaixo: NÃO COMENTADO NO VÍDEO, USAR ESSA OPÇÃO SOMENTE SE NECESSÁRIO.
-
-	#Mais informações acesse o Link dos Desenvolvedores do Wordpress:
-	Link: https://developer.wordpress.org/advanced-administration/upgrade/migrating/
-
 ```bash
+#utilizar os navegadores para testar o acesso ao Wordpress
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp
+
+#Informações que serão solicitadas na configuração via Web do WordPress
+Português do Brasil: Continuar;
+Informação necessária
+  Título do site: Seu Nome e Sobrenome;
+  Nome de usuário: admin;
+  Senha: pti@2018;
+  Confirme a senha: On (Habilitado) Confirmar o uso de uma senha fraca;
+  O seu e-mail: admin@ptin.intra; 
+<Instalar WordPress>
+<Acessar>
+
+#Tela de login do WordPress
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/wp-login.php
+  Nome de usuário ou endereço de email: admin
+  Senha: pti@2018
+  Lembrar-me: On (Habilitado)
+  <Acessar>
+
+#OBSERVAÇÃO IMPORTANTE: como não estamos utilizando servidores DNS e nem Domínio/Subdomínio
+#é recomendado alterar as configurações de Links Permanente do Wordpress, com isso resolvemos
+#uma falha de JSON (JavaScript Object Notation) na hora de salvar as mudanças no Wordpress.
+
+#Configuração dos Links Permanentes do WordPress
+Configurações
+  Links permanentes
+    Configurações de Links Permanentes
+      Configurações Comuns
+        Estrutura de Links Permanentes
+          ON (Selecionar): Padrão (http://endereço_ipv4_ubuntuserver/wp/?=123)
+  <Salvar Alterações>
+
+#Tela do site do WordPress
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/
+
+#OBSERVAÇÃO IMPORTANTE: Quando você faz a implementação do Wordpress em uma rede Local ou Cloud,
+#e precisa fazer a migração do Site para outra Rede com configurações diferentes, o Wordpress não
+#atualiza automaticamente os endereços IPv4 ou nome de Domínio que estão registrados na tabela de
+#configuração do Wordpress no MySQL Server, sendo necessário fazer essa atualização manualmente
+#conforme Script SQL abaixo: NÃO COMENTADO NO VÍDEO, USAR ESSA OPÇÃO SOMENTE SE NECESSÁRIO.
+
+#Mais informações acesse o Link dos Desenvolvedores do Wordpress:
+Link: https://developer.wordpress.org/advanced-administration/upgrade/migrating/
+
 #se logando no MySQL Server com o usuário e senha Wordpress
 #opções do comando mysql: -u (user), -p (password)
 sudo mysql -u wordpress -p
 ```
-
 ```sql
 /* Utilizar o banco de dados do Wordpress */
 USE wordpress;
@@ -260,9 +254,9 @@ exit
 
 ========================================DESAFIOS=========================================
 
-**#07_ DESAFIO-01:** FAZER A INSTALAÇÃO DE UM NOVO __`TEMA`__ DO WORDPRESS, FAZER A CRIAÇÃO DE __`02 (DUAS)`__ POSTAGEM NO WORDPRESS DE QUALQUER CONTEÚDO ADICIONANDO PELO MENOS __`UMA IMAGEM`__.
+**#07_ DESAFIO-01:** FAZER A INSTALAÇÃO DE UM NOVO __`TEMA`__ DO WORDPRESS, FAZER A CRIAÇÃO DE __`02 (DUAS)`__ POSTAGEM NO WORDPRESS DE QUALQUER CONTEÚDO ADICIONANDO PELO MENOS __`DUAS IMAGEM`__ EM CADA POSTAGEM.
 
-**#08_ DESAFIO-02:** FAZER A INSTALAÇÃO E CONFIGURAÇÃO DE __`02 (DOIS) PLUGINS`__ DO WORDPRESS MAIS USADO NO DIA A DIA O: __`Wordfence Security`__ E: __`W3 Total Cache`__.
+**#08_ DESAFIO-02:** FAZER A INSTALAÇÃO E CONFIGURAÇÃO DE __`02 (DOIS) PLUGINS`__ DO WORDPRESS MAIS USADO NO DIA A DIA O: __`Wordfence Security FREE: (GET FREE LICENSE)`__ E: __`W3 Total Cache`__ (OBSERVAÇÃO: NÃO PRECISA FAZER AS CONFIGURAÇÕES, APENAS A INSTALAÇÃO).
 
 **#09_ DESAFIO-03:** NO TEMA QUE VOCÊ INSTALOU, VERIFICAR A POSSIBILIDADE DE ADICIONAR OS __`ÍCONES DO GITHUB, LINKEDIN E FACEBOOK`__, ADICIONAR TAMBÉM OS LINKS PARA O SITE CRIADO NO DESAFIO DO __`APACHE2`__, FACILITANDO O ACESSO A SUAS PÁGINAS CRIADAS EM __`HTML E PHP`__ E COMEÇAR A CRIAR UM SISTEMA DE GESTÃO UNIFICADA DE PÁGINAS DE INTERNET QUE SERÁ UTILIZADO EM TODO ESSE CURSO.
 
@@ -273,38 +267,35 @@ exit
 | Path New Site               | /var/www/html/site |
 | Database Name               | newsite            |
 | User and Password Database  | newsite            |
+| User and Password Wordpress | super              |
 | Wordpress Template Install  | Astra              |
 
-**OBSERVAÇÃO IMPORTANTE:** CONFORME COMENTADO E RELATADO POR ALGUNS USUÁRIOS QUE ESTÃO FAZENDO OS DESAFIOS DO WORDPRESS, APÓS INSTALAR E CONFIGURAR OS PLUGINS OU TEMAS, O WORDPRESS DEPOIS DE ALGUM TEMPO PEDE PARA ATUALIZAR O SISTEMA, APÓS A ATUALIZAÇÃO, O SISTEMA DO WORDPRESS FICA FORA DO AR (INDISPONÍVEL) E APRESENTA A SEGUINTE MENSAGEM NO NAVEGADOR: *Momentaneamente indisponível para manutenção programada. Confira novamente em um minuto.* ESSA FALHA ESTÁ ASSOCIADA NO MOMENTO DE APLICAR A ATUALIZAÇÃO DO WORDPRESS, ELE TIRA O SITE DO AR PARA DEPOIS VOLTAR COM AS MUDANÇAS, MAIS PODE ACONTECER QUE ELE NÃO VOLTE, PARA CORRIGIR ESSA FALHA DIGITE OS COMANDOS ABAIXO (SOMENTE SE NECESSÁRIO):
-
+**OBSERVAÇÃO IMPORTANTE:** CONFORME COMENTADO E RELATADO POR ALGUNS USUÁRIOS QUE ESTÃO FAZENDO OS DESAFIOS DO WORDPRESS, APÓS INSTALAR E CONFIGURAR OS PLUGINS OU TEMAS, O WORDPRESS DEPOIS DE ALGUM TEMPO PEDE PARA ATUALIZAR O SISTEMA, APÓS A ATUALIZAÇÃO, O SISTEMA DO WORDPRESS FICA FORA DO AR (INDISPONÍVEL) E APRESENTA A SEGUINTE MENSAGEM NO NAVEGADOR: *Momentaneamente indisponível para manutenção programada. Confira novamente em um minuto.* ESSA FALHA ESTÁ ASSOCIADA NO MOMENTO DE APLICAR A ATUALIZAÇÃO DO WORDPRESS, ELE TIRA O SITE DO AR PARA DEPOIS VOLTAR COM AS MUDANÇAS, MAIS PODE ACONTECER DELE NÃO VOLTAR, PARA CORRIGIR ESSA FALHA DIGITE OS COMANDOS ABAIXO (SOMENTE SE NECESSÁRIO):
 ```bash
 #acessar o diretório do site do Wordpress
 cd /var/www/html/wp
 
-#listar o arquivo de manutenção do Wordpress
+#listar o arquivo oculto de manutenção do Wordpress
 #opção do comando ls: -l (list), -h (human-readable), -a (all)
 ls -lha .maintenance
 
-#remover o arquivo de manutenção do Wordpress
+#remover o arquivo oculto de manutenção do Wordpress
 #opção do comando rm: -v (verbose)
 sudo rm -v .maintenance
 
 #fazer um Reload do serviço do Apache2
 sudo systemctl reload apache2
-```
 
-	#testar novamente o Site, atualizar a página com Ctrl+R ou F5
-	firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/
+#testar novamente o Site, atualizar a página com Ctrl+R ou F5
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver/wp/
+```
 
 =========================================================================================
 
-OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WORDPRESS SE VOCÊ CONSEGUIU FAZER O DESAFIO COM 
-A SEGUINTE FRASE: Desafio do WordPress realizado com sucesso!!! #BoraParaPrática
+OBSERVAÇÃO IMPORTANTE: COMENTAR NO VÍDEO DO WORDPRESS SE VOCÊ CONSEGUIU FAZER O DESAFIO COM A SEGUINTE FRASE: Desafio do WordPress realizado com sucesso!!! #BoraParaPrática
 
-COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM)
-MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
+COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS (LINKEDIN, FACEBOOK, INSTAGRAM) MARCANDO: ROBSON VAAMONDE COM AS HASHTAGS E COPIANDO O CONTEÚDO DO DESAFIO ABAIXO: 
 
 LINK DO SELO: https://github.com/vaamonde/ubuntu-2204/blob/main/selos/04-wordpress.png
 
-#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver 
-#ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowordpress #desafiocms
+#boraparapratica #boraparaprática #vaamonde #robsonvaamonde #procedimentosemti #ubuntuserver #ubuntuserver2204 #desafiovaamonde #desafioboraparapratica #desafiowordpress #desafiocms
